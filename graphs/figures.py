@@ -8,7 +8,6 @@ import plotly.graph_objects as go
 col_swatch = px.colors.qualitative.Light24
 
 
-
 class NetworkGraph:
     def __init__(self, number):
         self.nodes_df, self.edges_df = self.load_data(number)

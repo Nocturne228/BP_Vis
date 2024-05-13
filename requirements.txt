@@ -1,0 +1,6 @@
+plotly~=5.22.0
+pandas~=2.2.2
+dash
+dash-cytoscape
+networkx~=3.3
+numpy~=1.26.4
