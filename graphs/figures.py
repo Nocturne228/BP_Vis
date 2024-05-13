@@ -64,9 +64,10 @@ class NetworkGraph:
 
         # 添加节点到元素列表，并使用计算的位置信息
         for node_id, node_attrs in self.G.nodes(data=True):
+            node_color = self.label_colors.get(node_attrs['label'], '#000')  # 默认为黑色
             elements.append({
-                'data': {'id': node_id, 'label': node_attrs['label']},
-                'position': {'x': pos[node_id][0] * 500, 'y': pos[node_id][1] * 500}  # 乘以 500 是为了调整布局范围
+                'data': {'id': node_id, 'label': node_attrs['label'], 'label_color': node_color},
+                'position': {'x': pos[node_id][0] * 500, 'y': pos[node_id][1] * 500}
             })
 
         # 添加边到元素列表
@@ -81,22 +82,23 @@ class NetworkGraph:
             layout={'name': 'preset'},
             style={'width': '100%', 'height': '400px'},
             elements=elements,
-            # stylesheet=[
-            #     {
-            #         'selector': 'node',
-            #         'style': {
-            #             'background-color': 'data(label_color)',
-            #             'label': 'data(label)'
-            #         }
-            #     },
-            #     {
-            #         'selector': 'edge',
-            #         'style': {
-            #             'line-color': 'blue',
-            #             'width': 0.1
-            #         }
-            #     }
-            # ]
+            stylesheet=[
+                {
+                    'selector': 'node',
+                    'style': {
+                        'background-color': 'data(label_color)',
+                        'width': 10,  # 设置节点宽度
+                        'height': 10  # 设置节点高度
+                    }
+                },
+                {
+                    'selector': 'edge',
+                    'style': {
+                        'line-color': 'blue',
+                        'width': 0.1
+                    }
+                }
+            ]
         )
 
         return cyto_graph
