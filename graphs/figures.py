@@ -81,7 +81,7 @@ class NetworkGraph:
 
         # 创建 cytoscape 组件
         cyto_graph = cyto.Cytoscape(
-            id='cytoscape-two-nodes',
+            id='cyto-network-graph',
             layout={'name': 'preset'},
             style={'width': '100%', 'height': '600px'},
             elements=elements,

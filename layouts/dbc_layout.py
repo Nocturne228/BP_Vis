@@ -1,6 +1,7 @@
 from dash import dcc, html
 import dash_bootstrap_components as dbc
 from graphs.figures import NetworkGraph
+from layouts.inputs import radio_items
 from interactions.callbacks import display_tap_node_data, on_form_change
 
 network = NetworkGraph(number=1)
@@ -25,8 +26,8 @@ switches = html.Div(
 
 inputs = html.Div(
     [
-        dbc.Form([switches]),
-        html.P(id="switches-output"),
+        dbc.Form([radio_items, switches]),
+        html.P(id="inputs-output"),
     ]
 )
 

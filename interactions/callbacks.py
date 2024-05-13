@@ -2,25 +2,27 @@ from dash import Input, Output, callback
 
 
 @callback(Output('cytoscape-tapNodeData-output', 'children'),
-          Input('cytoscape-two-nodes', 'tapNodeData'))
+          Input('cyto-network-graph', 'tapNodeData'))
 def display_tap_node_data(data):
     if data:
         return "Node: " + data['label']
 
 
 @callback(
-    Output("switches-output", "children"),
+    Output("inputs-output", "children"),
     [
-        Input("switches-input", "value"),
+        Input("radioitems-input", "value"),
     ],
 )
-def on_form_change(switches_value):
-    template = "switch{} selected."
+def on_form_change(radio_items_value):
+    return radio_items_value
 
-    n_switches = len(switches_value)
 
-    output_string = template.format(
-        n_switches,
-        "es" if n_switches != 1 else "",
-    )
-    return output_string
+# TODO 根据radio item的值显示不同的图像.
+# @callback(
+#     Output('cyto-network-graph', 'elements'),
+#     Input('inputs-output', 'children')
+# )
+# def update_graph(n_clicks):
+#
+#         return new_elements

@@ -1,4 +1,5 @@
 from dash import html, dcc
+import dash_bootstrap_components as dbc
 
 # Input layouts
 layout_inputs = html.Div([
@@ -18,3 +19,20 @@ layout_inputs = html.Div([
         ]),
     ], className="row"),
 ])
+
+
+radio_items = html.Div(
+    [
+        dbc.Label("Choose one"),
+        dbc.RadioItems(
+            options=[
+                {"label": "显示核心资产", "value": 1},
+                {"label": "显示关键链路", "value": 2},
+                {"label": "Disabled Option", "value": 3, "disabled": True},
+            ],
+            value=1,
+            id="radioitems-input",
+        ),
+    ]
+)
+
