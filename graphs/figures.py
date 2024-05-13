@@ -18,13 +18,17 @@ class NetworkGraph:
             'Whois_Email': '#00CC96',
             'Whois_Name': '#AB63FA',
             'IP': '#FFA15A',
+            'IP_C': '#5fab28',
             'Cert': '#19D3F3',
             'ASN': '#FF6692'
         }
+        self.edge_colors = {
+
+        }
 
     def load_data(self, number):
-        nodes_df = pd.read_csv(f'data/team{number}/Node.csv')
-        edges_df = pd.read_csv(f'data/team{number}/Link.csv')
+        nodes_df = pd.read_csv(f'data/team{number}/node.csv')
+        edges_df = pd.read_csv(f'data/team{number}/link.csv')
         return nodes_df, edges_df
 
     def create_graph(self):
@@ -49,7 +53,7 @@ class NetworkGraph:
             fig.add_scatter(x=[pos[edge[0]][0], pos[edge[1]][0], None],
                             y=[pos[edge[0]][1], pos[edge[1]][1], None],
                             mode='lines',
-                            line=dict(color='blue', width=0.1))
+                            line=dict(color='#204c6b', width=0.1))
 
         fig.update_traces(marker=dict(size=8))
         return fig
@@ -79,7 +83,7 @@ class NetworkGraph:
         cyto_graph = cyto.Cytoscape(
             id='cytoscape-two-nodes',
             layout={'name': 'preset'},
-            style={'width': '100%', 'height': '400px'},
+            style={'width': '100%', 'height': '600px'},
             elements=elements,
             stylesheet=[
                 {
@@ -93,8 +97,8 @@ class NetworkGraph:
                 {
                     'selector': 'edge',
                     'style': {
-                        'line-color': 'blue',
-                        'width': 0.1
+                        'line-color': '#204c6b',
+                        'width': 1
                     }
                 }
             ],

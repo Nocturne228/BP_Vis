@@ -1,6 +1,8 @@
 from dash import html, dcc
 from interactions.callbacks import display_tap_node_data
 from graphs.figures import NetworkGraph
+import dash_bootstrap_components as dbc
+from layouts.inputs import layout_inputs
 
 colors = {
     'background': '#FFFFFF',
@@ -38,8 +40,15 @@ app_layout = html.Div(style={'backgroundColor': colors['background']}, children=
     # 添加 cy_graph 到布局中
     html.Div(children=[
         html.H2("Cytoscape Graph"),
-        cy_graph,
-        html.P(id='cytoscape-tapNodeData-output')
+        html.Div([
+            cy_graph,
+            html.P(id='cytoscape-tapNodeData-output')
+        ], className='cyto-network-graph-container'),
+
+        html.Div([
+            layout_inputs,
+        ], className='input-container')
+
     ]),
 
 
