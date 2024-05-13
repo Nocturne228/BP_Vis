@@ -15,11 +15,11 @@ class NetworkGraph:
         self.label_colors = {
             'Domain': '#636EFA',
             'Whois_Phone': '#EF553B',
-            'Whois_EMail': '#00CC96',
+            'Whois_Email': '#00CC96',
             'Whois_Name': '#AB63FA',
             'IP': '#FFA15A',
             'Cert': '#19D3F3',
-            'ASP': '#FF6692'
+            'ASN': '#FF6692'
         }
 
     def load_data(self, number):
@@ -63,7 +63,7 @@ class NetworkGraph:
 
         # 添加节点到元素列表，并使用计算的位置信息
         for node_id, node_attrs in self.G.nodes(data=True):
-            node_color = self.label_colors.get(node_attrs['label'], '#000')  # 默认为黑色
+            node_color = self.label_colors.get(node_attrs['label'], '#FFFFFF')  # 默认为白色
             elements.append({
                 'data': {'id': node_id, 'label': node_attrs['label'], 'label_color': node_color},
                 'position': {'x': pos[node_id][0] * 500, 'y': pos[node_id][1] * 500}
@@ -97,7 +97,7 @@ class NetworkGraph:
                         'width': 0.1
                     }
                 }
-            ]
+            ],
         )
 
         return cyto_graph
