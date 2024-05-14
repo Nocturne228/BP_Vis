@@ -1,12 +1,34 @@
 from dash import dcc, html
 import dash_bootstrap_components as dbc
-from graphs.figures import NetworkGraph
+from graphs.figures import NetworkGraph, generate_pie_chart
 from layouts.inputs import radio_items
-from interactions.callbacks import display_tap_node_data, on_form_change
+from utils.color_palette import label_colors
 
 network = NetworkGraph(number=1)
 fig = network.plot_network_graph()
 cy_graph = network.cyto_graph_plot()
+pie_chart = generate_pie_chart()
+
+badges = html.Span(
+    [
+        dbc.Badge("Domain", pill=True, color=label_colors["Domain"], className="me-1"),
+        dbc.Badge("Whois_Phone", pill=True, color=label_colors["Whois_Phone"], className="me-1"),
+        dbc.Badge("Whois_Email", pill=True, color=label_colors["Whois_Email"], className="me-1"),
+        dbc.Badge("WWhois_Name", pill=True, color=label_colors["Whois_Name"], className="me-1"),
+        dbc.Badge("IP", pill=True, color=label_colors["IP"], className="me-1"),
+        dbc.Badge("IP_C", pill=True, color=label_colors["IP_C"], className="me-1"),
+        dbc.Badge("Cert", pill=True, color=label_colors["Cert"], className="me-1"),
+        dbc.Badge("ASN", pill=True, color=label_colors["ASN"], className="me-1"),
+        dbc.Badge(
+            "Light",
+            pill=True,
+            color="light",
+            text_color="dark",
+            className="me-1",
+        ),
+        dbc.Badge("Dark", pill=True, color="dark"),
+    ]
+)
 
 switches = html.Div(
     [
@@ -27,7 +49,6 @@ switches = html.Div(
 inputs = html.Div(
     [
         dbc.Form([radio_items, switches]),
-        html.P(id="inputs-output"),
     ]
 )
 
@@ -72,18 +93,30 @@ body_layout = dbc.Container(
                             ],
                         )
                     ],
-                    width=2  # 设置 inputs 列的宽度为 3
-
+                    width=2
                 ),
                 dbc.Col(
                     [
-                        cy_graph
+                        cy_graph,
                     ],
-                    width=10
                 ),
+                dbc.Col(
+                    [
+                        dbc.Alert(
+                            id='cytoscape-tapEdgeData-output'
+                        ),
+                        badges,
+                        dcc.Graph(figure=pie_chart)
+                    ],
+                    width=4
+                )
+            ],
+        ),
+        dbc.Row(
+            [
+                badges
             ]
         )
-
     ],
     style={"marginTop": 20},
 )

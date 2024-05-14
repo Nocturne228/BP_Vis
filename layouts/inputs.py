@@ -28,10 +28,10 @@ radio_items = html.Div(
             options=[
                 {"label": "显示核心资产", "value": 1},
                 {"label": "显示关键链路", "value": 2},
-                {"label": "Disabled Option", "value": 3, "disabled": True},
+                {"label": "Disabled Option", "value": 3},
             ],
-            value=1,
-            id="radioitems-input",
+            value=3,
+            id="radio-items-input",
         ),
     ]
 )

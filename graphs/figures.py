@@ -2,10 +2,15 @@ import pandas as pd
 import networkx as nx
 import numpy as np
 import dash_cytoscape as cyto
+from dash import callback, Input, Output
 import plotly.express as px
 import plotly.graph_objects as go
 
 col_swatch = px.colors.qualitative.Light24
+
+number = 1
+nodes_df = pd.read_csv(f'data/team{number}/node.csv')
+edges_df = pd.read_csv(f'data/team{number}/link.csv')
 
 
 class NetworkGraph:
@@ -21,9 +26,6 @@ class NetworkGraph:
             'IP_C': '#5fab28',
             'Cert': '#19D3F3',
             'ASN': '#FF6692'
-        }
-        self.edge_colors = {
-
         }
 
     def load_data(self, number):
@@ -105,6 +107,22 @@ class NetworkGraph:
         )
 
         return cyto_graph
+
+
+def generate_pie_chart():
+    df = nodes_df
+
+    type_counts = df['type'].value_counts()
+    # 计算每种'type'的数量并转换为DataFrame
+    type_counts_df = type_counts.reset_index()
+    type_counts_df.columns = ['type', 'count']
+
+    # 创建饼图并显示图例
+    fig = px.pie(names=type_counts_df['type'], values=type_counts_df['count'], title='资产类型组成')
+    fig.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)', paper_bgcolor='rgba(0,0,0,0)',
+                      legend_font_color='white', title_font_color='white')
+    fig.update_traces(textfont_color='white')
+    return fig
 
 
 if __name__ == '__main__':
