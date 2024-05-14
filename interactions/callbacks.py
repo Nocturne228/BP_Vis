@@ -13,6 +13,6 @@ def display_tap_node_data(data):
           Input('cyto-network-graph', 'tapEdgeData'))
 def display_tap_edge_data(data):
     if data:
-        return "Edge: " + " -> "
+        return "Edge: " + data['label']
 
 # TODO 根据radio item的值显示不同的图像.

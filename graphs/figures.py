@@ -5,6 +5,7 @@ import dash_cytoscape as cyto
 from dash import callback, Input, Output
 import plotly.express as px
 import plotly.graph_objects as go
+from utils.color_palette import label_colors
 
 col_swatch = px.colors.qualitative.Light24
 
@@ -26,7 +27,20 @@ class NetworkGraph:
             'IP_C': '#5fab28',
             'Cert': '#19D3F3',
             'ASN': '#FF6692'
-        }
+            }
+
+        self.edge_colors = {'r_cert': '#19D3F3',
+                            'r_subdomain': '#636EFA',
+                            'r_request_jump': '#636EFA',
+                            'r_dns_a': '#FFA15A',
+                            'r_whois_name': '#AB63FA',
+                            'r_whois_email': '#00CC96',
+                            'r_whois_phone': '#EF553B',
+                            'r_cert_chain': '#19D3F3',
+                            'r_cname': '#636EFA',
+                            'r_asn': '#FECB52',
+                            'r_cidr': '#5fab28'
+                            }
 
     def load_data(self, number):
         nodes_df = pd.read_csv(f'data/team{number}/node.csv')
@@ -34,12 +48,12 @@ class NetworkGraph:
         return nodes_df, edges_df
 
     def create_graph(self):
-        G = nx.Graph()
+        g = nx.Graph()
         for i, row in self.nodes_df.iterrows():
-            G.add_node(row['id'], label=row['type'])
+            g.add_node(row['id'], label=row['type'])
         for i, row in self.edges_df.iterrows():
-            G.add_edge(row['source'], row['target'])
-        return G
+            g.add_edge(row['source'], row['target'], label=row['relation'])
+        return g
 
     def plot_network_graph(self):
         pos = nx.spring_layout(self.G)
@@ -76,9 +90,10 @@ class NetworkGraph:
             })
 
         # 添加边到元素列表
-        for u, v in self.G.edges():
+        for u, v, data in self.G.edges(data=True):
+            edge_color = self.edge_colors.get(data['label'], '#FFFFFF')
             elements.append({
-                'data': {'source': u, 'target': v}
+                'data': {'source': u, 'target': v, 'label': data['label'], 'label_color': edge_color}
             })
 
         # 创建 cytoscape 组件
@@ -99,7 +114,7 @@ class NetworkGraph:
                 {
                     'selector': 'edge',
                     'style': {
-                        'line-color': '#204c6b',
+                        'line-color': 'data(label_color)',
                         'width': 1
                     }
                 }
@@ -118,7 +133,27 @@ def generate_pie_chart():
     type_counts_df.columns = ['type', 'count']
 
     # 创建饼图并显示图例
-    fig = px.pie(names=type_counts_df['type'], values=type_counts_df['count'], title='资产类型组成')
+    fig = px.pie(names=type_counts_df['type'], values=type_counts_df['count'],
+                 title='资产类型组成', height=350, width=500)
+
+    fig.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)', paper_bgcolor='rgba(0,0,0,0)',
+                      legend_font_color='white', title_font_color='white')
+    fig.update_traces(textfont_color='white')
+    return fig
+
+
+def generate_edge_pie_chart():
+    df = edges_df
+
+    type_counts = df['relation'].value_counts()
+    # 计算每种'type'的数量并转换为DataFrame
+    type_counts_df = type_counts.reset_index()
+    type_counts_df.columns = ['type', 'count']
+
+    # 创建饼图并显示图例
+    fig = px.pie(names=type_counts_df['type'], values=type_counts_df['count'],
+                 title='关系类型组成', height=350, width=500)
+
     fig.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)', paper_bgcolor='rgba(0,0,0,0)',
                       legend_font_color='white', title_font_color='white')
     fig.update_traces(textfont_color='white')

@@ -1,6 +1,6 @@
 from dash import dcc, html
 import dash_bootstrap_components as dbc
-from graphs.figures import NetworkGraph, generate_pie_chart
+from graphs.figures import NetworkGraph, generate_pie_chart, generate_edge_pie_chart
 from layouts.inputs import radio_items
 from utils.color_palette import label_colors
 
@@ -8,13 +8,14 @@ network = NetworkGraph(number=1)
 fig = network.plot_network_graph()
 cy_graph = network.cyto_graph_plot()
 pie_chart = generate_pie_chart()
+edge_pie_chart = generate_edge_pie_chart()
 
 badges = html.Span(
     [
         dbc.Badge("Domain", pill=True, color=label_colors["Domain"], className="me-1"),
         dbc.Badge("Whois_Phone", pill=True, color=label_colors["Whois_Phone"], className="me-1"),
         dbc.Badge("Whois_Email", pill=True, color=label_colors["Whois_Email"], className="me-1"),
-        dbc.Badge("WWhois_Name", pill=True, color=label_colors["Whois_Name"], className="me-1"),
+        dbc.Badge("Whois_Name", pill=True, color=label_colors["Whois_Name"], className="me-1"),
         dbc.Badge("IP", pill=True, color=label_colors["IP"], className="me-1"),
         dbc.Badge("IP_C", pill=True, color=label_colors["IP_C"], className="me-1"),
         dbc.Badge("Cert", pill=True, color=label_colors["Cert"], className="me-1"),
@@ -84,14 +85,22 @@ body_layout = dbc.Container(
                                     id='cytoscape-tapNodeData-output',
                                     children='tap to display info of node',
                                     color='secondary',
-                                )
+                                ),
+                                dbc.Alert(
+                                    id='cytoscape-tapEdgeData-output'
+                                ),
                             ],
                         ),
                         dbc.Col(
                             [
-                                inputs
+                                inputs,
                             ],
-                        )
+                        ),
+                        dbc.Col(
+                            [
+                                badges,
+                            ]
+                        ),
                     ],
                     width=2
                 ),
@@ -102,11 +111,9 @@ body_layout = dbc.Container(
                 ),
                 dbc.Col(
                     [
-                        dbc.Alert(
-                            id='cytoscape-tapEdgeData-output'
-                        ),
-                        badges,
-                        dcc.Graph(figure=pie_chart)
+
+                        dcc.Graph(figure=pie_chart),
+                        dcc.Graph(figure=edge_pie_chart),
                     ],
                     width=4
                 )

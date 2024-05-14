@@ -1,13 +1,59 @@
+import matplotlib.colors as mcolors
+
+
 label_colors = {
-            'Domain': '#636EFA',
-            'Whois_Phone': '#EF553B',
-            'Whois_Email': '#00CC96',
-            'Whois_Name': '#AB63FA',
-            'IP': '#FFA15A',
-            'IP_C': '#5fab28',
-            'Cert': '#19D3F3',
-            'ASN': '#FF6692'
-        }
+    'Domain': '#636EFA',
+    'Whois_Phone': '#EF553B',
+    'Whois_Email': '#00CC96',
+    'Whois_Name': '#AB63FA',
+    'IP': '#FFA15A',
+    'IP_C': '#5fab28',
+    'Cert': '#19D3F3',
+    'ASN': '#FF6692'
+}
+
+bright_colors = {
+    'Domain': '#6570ff',
+    'Whois_Phone': '#ff5b3f',
+    'Whois_Email': '#00f5b4',
+    'Whois_Name': '#ae65ff',
+    'IP': '#ffa15a',
+    'IP_C': '#72cd30',
+    'Cert': '#1addff',
+    'ASN': '#ff6692'
+}
+
+dark = {
+    'Domain': '#2c3263',
+    'Whois_Phone': '#64291a',
+    'Whois_Email': '#005a43',
+    'IP': '#4f3619',
+    'IP_C': '#224717',
+    'Cert': '#13455b',
+    'ASN': '#5c2e2e'
+}
+
+
+edge_color = {'r_cert': '#19D3F3',
+              'r_subdomain': '#636EFA',
+              'r_request_jump': '#636EFA',
+              'r_dns_a': '#FFA15A',
+              'r_whois_name': '#AB63FA',
+              'r_whois_email': '#00CC96',
+              'r_whois_phone': '#EF553B',
+              'r_cert_chain': '#19D3F3',
+              'r_cname': '#636EFA',
+              'r_asn': '#FECB52'
+              }
+
+
+def adjust_brightness(color_hex, factor=1.2):
+    rgb_tuple = mcolors.hex2color(color_hex)
+    hsv_tuple = mcolors.rgb_to_hsv(rgb_tuple)
+    adjusted_hsv = (hsv_tuple[0], hsv_tuple[1], min(1, hsv_tuple[2] * factor))
+    adjusted_rgb = mcolors.hsv_to_rgb(adjusted_hsv)
+    adjusted_hex = mcolors.rgb2hex(adjusted_rgb)
+    return adjusted_hex
 
 
 def reduce_brightness(hex_color, factor=0.5):

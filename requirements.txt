@@ -1,7 +1,9 @@
-plotly~=5.22.0
-pandas~=2.2.2
+plotly
+pandas
 dash
 dash-cytoscape
 dash-bootstrap-components
-networkx~=3.3
-numpy~=1.26.4
+networkx
+numpy
+
+matplotlib
