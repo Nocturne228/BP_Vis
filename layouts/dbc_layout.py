@@ -3,10 +3,10 @@ import dash_bootstrap_components as dbc
 from graphs.figures import NetworkGraph, generate_pie_chart, generate_edge_pie_chart
 from layouts.inputs import radio_items
 from utils.color_palette import label_colors
+from graphs.network_graphs import base_cyto_graph, dark_cyto_graph
 
 network = NetworkGraph(number=1)
 fig = network.plot_network_graph()
-cy_graph = network.cyto_graph_plot()
 pie_chart = generate_pie_chart()
 edge_pie_chart = generate_edge_pie_chart()
 
@@ -56,16 +56,16 @@ inputs = html.Div(
 navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink("Source Code", href="https://github.com/Nocturne228/BP_Vis")),
-        dbc.DropdownMenu(
-            children=[
-                dbc.DropdownMenuItem("More pages", header=True),
-                dbc.DropdownMenuItem("Page 2", href="#"),
-                dbc.DropdownMenuItem("Page 3", href="#"),
-            ],
-            nav=True,
-            in_navbar=True,
-            label="More",
-        ),
+        # dbc.DropdownMenu(
+        #     children=[
+        #         dbc.DropdownMenuItem("More pages", header=True),
+        #         dbc.DropdownMenuItem("Page 2", href="#"),
+        #         dbc.DropdownMenuItem("Page 3", href="#"),
+        #     ],
+        #     nav=True,
+        #     in_navbar=True,
+        #     label="More",
+        # ),
     ],
     brand="黑灰产业网络资产图谱分析",
     brand_href="#",
@@ -94,6 +94,7 @@ body_layout = dbc.Container(
                         dbc.Col(
                             [
                                 inputs,
+                                html.P(id='radio-item-output')
                             ],
                         ),
                         dbc.Col(
@@ -106,7 +107,8 @@ body_layout = dbc.Container(
                 ),
                 dbc.Col(
                     [
-                        cy_graph,
+                        base_cyto_graph,
+                        dark_cyto_graph,
                     ],
                 ),
                 dbc.Col(

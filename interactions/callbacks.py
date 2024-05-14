@@ -1,18 +1,63 @@
-from dash import Input, Output, callback
+import copy
+from utils.color_palette import adjust_brightness
+from dash import Input, Output, State, callback
+from graphs.network_graphs import base_elements, dark_elements, core_ids
 import pandas as pd
 
 
 @callback(Output('cytoscape-tapNodeData-output', 'children'),
-          Input('cyto-network-graph', 'tapNodeData'))
+          Input('base-cyto-graph', 'tapNodeData'))
 def display_tap_node_data(data):
     if data:
         return "Node: " + data['label']
 
 
 @callback(Output('cytoscape-tapEdgeData-output', 'children'),
-          Input('cyto-network-graph', 'tapEdgeData'))
+          Input('base-cyto-graph', 'tapEdgeData'))
 def display_tap_edge_data(data):
     if data:
         return "Edge: " + data['label']
 
-# TODO 根据radio item的值显示不同的图像.
+
+@callback(
+    Output('radio-item-output', 'children'),
+    Input('radio-items-input', 'value'),
+)
+def radio_item_output(value):
+    return value
+
+
+@callback(
+    Output('base-cyto-graph', 'elements'),
+    [Input('radio-item-output', 'children')],  # Assuming it's a radio item, use 'value' not 'children'
+    [State('base-cyto-graph', 'elements')]
+)
+def update_network_graph(radio_item_value, old_elements):
+    # Ensure this is defined or passed appropriately
+    # print(type(radio_item_value), type(old_elements))
+    if radio_item_value == 1:  # Assuming '1' is a string or adjust based on actual value type
+        # old_elements = copy.deepcopy(dark_elements)
+        # print('judge')
+        for element in old_elements:
+            if 'id' in element['data']:  # Checking if it is a node
+                if element['data']['id'] in core_ids:
+                    # print("核心")
+                    # Assuming adjust_brightness is a defined function that adjusts the color
+                    element['data']['label_color'] = adjust_brightness(element['data']['label_color'], factor=2.0)
+                else:
+                    # print("非核心")
+                    element['data']['label_color'] = adjust_brightness(element['data']['label_color'], factor=0.5)
+    elif radio_item_value == 2:
+        old_elements = copy.deepcopy(base_elements)
+        for element in old_elements:
+            if 'id' in element['data']:  # Checking if it is a node
+                if element['data']['id'] in core_ids:
+                    # print("核心")
+                    # Assuming adjust_brightness is a defined function that adjusts the color
+                    element['data']['label_color'] = adjust_brightness(element['data']['label_color'], factor=0.5)
+                else:
+                    # print("非核心")
+                    element['data']['label_color'] = adjust_brightness(element['data']['label_color'], factor=2.0)
+    else:
+        pass
+    return old_elements

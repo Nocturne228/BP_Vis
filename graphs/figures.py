@@ -9,9 +9,10 @@ from utils.color_palette import label_colors
 
 col_swatch = px.colors.qualitative.Light24
 
-number = 1
-nodes_df = pd.read_csv(f'data/team{number}/node.csv')
-edges_df = pd.read_csv(f'data/team{number}/link.csv')
+numbers = 1
+nodes_df = pd.read_csv(f'data/team{numbers}/node.csv')
+edges_df = pd.read_csv(f'data/team{numbers}/link.csv')
+core_node = pd.read_csv(f'data/team{numbers}/核心资产.csv')
 
 
 class NetworkGraph:
@@ -27,7 +28,7 @@ class NetworkGraph:
             'IP_C': '#5fab28',
             'Cert': '#19D3F3',
             'ASN': '#FF6692'
-            }
+        }
 
         self.edge_colors = {'r_cert': '#19D3F3',
                             'r_subdomain': '#636EFA',
@@ -73,55 +74,6 @@ class NetworkGraph:
 
         fig.update_traces(marker=dict(size=8))
         return fig
-
-    def cyto_graph_plot(self):
-        # 使用 NetworkX 的布局算法计算节点位置
-        pos = nx.spring_layout(self.G)
-
-        # 创建 cytoscape 元素列表
-        elements = []
-
-        # 添加节点到元素列表，并使用计算的位置信息
-        for node_id, node_attrs in self.G.nodes(data=True):
-            node_color = self.label_colors.get(node_attrs['label'], '#FFFFFF')  # 默认为白色
-            elements.append({
-                'data': {'id': node_id, 'label': node_attrs['label'], 'label_color': node_color},
-                'position': {'x': pos[node_id][0] * 500, 'y': pos[node_id][1] * 500}
-            })
-
-        # 添加边到元素列表
-        for u, v, data in self.G.edges(data=True):
-            edge_color = self.edge_colors.get(data['label'], '#FFFFFF')
-            elements.append({
-                'data': {'source': u, 'target': v, 'label': data['label'], 'label_color': edge_color}
-            })
-
-        # 创建 cytoscape 组件
-        cyto_graph = cyto.Cytoscape(
-            id='cyto-network-graph',
-            layout={'name': 'preset'},
-            style={'width': '100%', 'height': '600px'},
-            elements=elements,
-            stylesheet=[
-                {
-                    'selector': 'node',
-                    'style': {
-                        'background-color': 'data(label_color)',
-                        'width': 10,  # 设置节点宽度
-                        'height': 10  # 设置节点高度
-                    }
-                },
-                {
-                    'selector': 'edge',
-                    'style': {
-                        'line-color': 'data(label_color)',
-                        'width': 1
-                    }
-                }
-            ],
-        )
-
-        return cyto_graph
 
 
 def generate_pie_chart():

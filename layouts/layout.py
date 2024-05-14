@@ -12,7 +12,7 @@ colors = {
 
 network = NetworkGraph(number=1)
 fig = network.plot_network_graph()
-cy_graph = network.cyto_graph_plot()
+# cy_graph = network.cyto_graph_plot()
 
 
 app_layout = html.Div(style={'backgroundColor': colors['background']}, children=[
@@ -41,7 +41,7 @@ app_layout = html.Div(style={'backgroundColor': colors['background']}, children=
     html.Div(children=[
         html.H2("Cytoscape Graph"),
         html.Div([
-            cy_graph,
+            # cy_graph,
             html.P(id='cytoscape-tapNodeData-output')
         ], className='cyto-network-graph-container'),
 
