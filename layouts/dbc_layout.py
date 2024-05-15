@@ -102,6 +102,7 @@ body_layout = dbc.Container(
                 dbc.Col(
                     [
                         base_cyto_graph,
+                        dcc.Graph(figure=sankey_fig)
                     ],
                 ),
                 dbc.Col(
@@ -112,7 +113,6 @@ body_layout = dbc.Container(
                                 dcc.Graph(figure=edge_pie_chart),
                             ]
                         ),
-                        dcc.Graph(figure=sankey_fig)
                         # dcc.Graph(figure=pie_chart),
                         # dcc.Graph(figure=edge_pie_chart),
                     ],
@@ -120,11 +120,6 @@ body_layout = dbc.Container(
                 )
             ],
         ),
-        dbc.Row(
-            [
-                badges
-            ]
-        )
     ],
     style={"marginTop": 20},
 )
