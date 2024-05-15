@@ -5,18 +5,14 @@ import dash_cytoscape as cyto
 from dash import callback, Input, Output
 import plotly.express as px
 import plotly.graph_objects as go
+from data.data_df import nodes_df, edges_df, core_node, key_link
 from utils.color_palette import label_colors
 
 col_swatch = px.colors.qualitative.Light24
 
-numbers = 1
-nodes_df = pd.read_csv(f'data/team{numbers}/node.csv')
-edges_df = pd.read_csv(f'data/team{numbers}/link.csv')
-core_node = pd.read_csv(f'data/team{numbers}/核心资产.csv')
-
 
 class NetworkGraph:
-    def __init__(self, number):
+    def __init__(self, number=1):
         self.nodes_df, self.edges_df = self.load_data(number)
         self.G = self.create_graph()
         self.label_colors = {
@@ -109,6 +105,54 @@ def generate_edge_pie_chart():
     fig.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)', paper_bgcolor='rgba(0,0,0,0)',
                       legend_font_color='white', title_font_color='white')
     fig.update_traces(textfont_color='white')
+    return fig
+
+
+def generate_core_info():
+    pass
+
+
+def generate_link_sankey():
+    from utils.data_process import get_node_label
+    node_labels = ['Domain', 'IP', 'Cert', 'Whois_Name', 'Whois_Phone', 'Whois_Email', 'IP_C', 'ASN']
+
+    # 创建节点和链接信息
+    nodes = list(node_labels)
+    links = []
+    for index, row in key_link.iterrows():
+        source_label = get_node_label(row['source'])
+        target_label = get_node_label(row['target'])
+        if source_label and target_label:
+            links.append({
+                'source': nodes.index(source_label),
+                'target': nodes.index(target_label),
+                'value': 1,  # 流量值设为 1
+                'label': row['relation']  # 链接的标签为关系列
+            })
+
+    # 创建 Sankey 图
+    fig = go.Figure(go.Sankey(
+        node=dict(
+            pad=15,
+            thickness=20,
+            line=dict(color="black", width=0.5),
+            label=nodes,
+        ),
+        link=dict(
+            source=[link['source'] for link in links],
+            target=[link['target'] for link in links],
+            value=[link['value'] for link in links],
+            label=[link['label'] for link in links],
+            color='rgba(86, 90, 203, 0.1)'  # 设置连线颜色
+        )
+    ))
+
+    # 设置图表标题
+    fig.update_layout(title_text="关键链路流向图")
+    fig.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)', paper_bgcolor='rgba(0,0,0,0)',
+                      legend_font_color='white', title_font_color='white', font_color='white')
+
+    # 显示图表
     return fig
 
 

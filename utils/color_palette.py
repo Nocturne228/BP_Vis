@@ -41,7 +41,8 @@ edge_colors = {
     'r_whois_phone': '#EF553B',
     'r_cert_chain': '#19D3F3',
     'r_cname': '#636EFA',
-    'r_asn': '#FECB52'
+    'r_asn': '#FECB52',
+    'r_cidr': '#5fab28'
 }
 
 

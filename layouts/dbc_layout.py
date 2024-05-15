@@ -1,12 +1,13 @@
 from dash import dcc, html
 import dash_bootstrap_components as dbc
-from graphs.figures import NetworkGraph, generate_pie_chart, generate_edge_pie_chart
+from graphs.figures import NetworkGraph, generate_pie_chart, generate_edge_pie_chart, generate_link_sankey
 from layouts.inputs import radio_items
 from utils.color_palette import label_colors
-from graphs.network_graphs import base_cyto_graph, dark_cyto_graph
+from graphs.network_graphs import base_cyto_graph
 
 network = NetworkGraph(number=1)
 fig = network.plot_network_graph()
+sankey_fig = generate_link_sankey()
 pie_chart = generate_pie_chart()
 edge_pie_chart = generate_edge_pie_chart()
 
@@ -20,36 +21,28 @@ badges = html.Span(
         dbc.Badge("IP_C", pill=True, color=label_colors["IP_C"], className="me-1"),
         dbc.Badge("Cert", pill=True, color=label_colors["Cert"], className="me-1"),
         dbc.Badge("ASN", pill=True, color=label_colors["ASN"], className="me-1"),
-        dbc.Badge(
-            "Light",
-            pill=True,
-            color="light",
-            text_color="dark",
-            className="me-1",
-        ),
-        dbc.Badge("Dark", pill=True, color="dark"),
     ]
 )
 
-switches = html.Div(
-    [
-        dbc.Label("Toggle a bunch"),
-        dbc.Checklist(
-            options=[
-                {"label": "显示核心资产", "value": 1},
-                {"label": "显示关键链路", "value": 2},
-                {"label": "Disabled Option", "value": 3, "disabled": True},
-            ],
-            value=[1],
-            id="switches-input",
-            switch=True,
-        ),
-    ]
-)
+# switches = html.Div(
+#     [
+#         dbc.Label("展示关键信息"),
+#         dbc.Checklist(
+#             options=[
+#                 {"label": "显示核心资产", "value": 1},
+#                 {"label": "显示关键链路", "value": 2},
+#                 {"label": "默认显示", "value": 3, "disabled": True},
+#             ],
+#             value=[1],
+#             id="switches-input",
+#             switch=True,
+#         ),
+#     ]
+# )
 
 inputs = html.Div(
     [
-        dbc.Form([radio_items, switches]),
+        dbc.Form([radio_items]),
     ]
 )
 
@@ -94,7 +87,8 @@ body_layout = dbc.Container(
                         dbc.Col(
                             [
                                 inputs,
-                                html.P(id='radio-item-output')
+                                # html.P(id='radio-item-output')
+                                html.Div(id='radio-item-output', style={'display': 'none'})  # 隐藏的输出组件
                             ],
                         ),
                         dbc.Col(
@@ -108,14 +102,19 @@ body_layout = dbc.Container(
                 dbc.Col(
                     [
                         base_cyto_graph,
-                        dark_cyto_graph,
                     ],
                 ),
                 dbc.Col(
                     [
-
-                        dcc.Graph(figure=pie_chart),
-                        dcc.Graph(figure=edge_pie_chart),
+                        dbc.Row(
+                            [
+                                dcc.Graph(figure=pie_chart),
+                                dcc.Graph(figure=edge_pie_chart),
+                            ]
+                        ),
+                        dcc.Graph(figure=sankey_fig)
+                        # dcc.Graph(figure=pie_chart),
+                        # dcc.Graph(figure=edge_pie_chart),
                     ],
                     width=4
                 )

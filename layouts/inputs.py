@@ -23,12 +23,12 @@ layout_inputs = html.Div([
 
 radio_items = html.Div(
     [
-        dbc.Label("Choose one"),
+        dbc.Label("展示关键信息"),
         dbc.RadioItems(
             options=[
                 {"label": "显示核心资产", "value": 1},
                 {"label": "显示关键链路", "value": 2},
-                {"label": "Disabled Option", "value": 3},
+                {"label": "默认展示", "value": 3},
             ],
             value=3,
             id="radio-items-input",

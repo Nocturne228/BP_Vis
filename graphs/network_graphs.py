@@ -2,11 +2,9 @@ import pandas as pd
 import networkx as nx
 import copy
 import dash_cytoscape as cyto
+from data.data_df import nodes_df, edges_df, core_node, key_link
 from utils.color_palette import adjust_brightness, label_colors, edge_colors
 
-nodes_df = pd.read_csv('data/team1/node.csv')
-edges_df = pd.read_csv('data/team1/link.csv')
-core_node = pd.read_csv('data/team1/核心资产.csv')
 core_ids = set(core_node['id'])
 
 
@@ -59,44 +57,10 @@ def create_network_graph():
         ],
     )
 
-    temp_elements = copy.deepcopy(base_elements)
-    for element in temp_elements:
-        if 'id' in element['data']:  # 检查是否是节点
-            if element['data']['id'] in core_ids:
-                # 核心节点，高亮显示
-                element['data']['label_color'] = adjust_brightness(element['data']['label_color'], factor=2.0)
-            else:
-                # 非核心节点，颜色变暗
-                element['data']['label_color'] = adjust_brightness(element['data']['label_color'], factor=0.5)
-
-    dark_cyto_graph = cyto.Cytoscape(
-        id='dark-cyto-graph',
-        layout={'name': 'preset'},
-        style={'width': '100%', 'height': '600px'},
-        elements=temp_elements,
-        stylesheet=[
-            {
-                'selector': 'node',
-                'style': {
-                    'background-color': 'data(label_color)',
-                    'width': 10,  # 设置节点宽度
-                    'height': 10  # 设置节点高度
-                }
-            },
-            {
-                'selector': 'edge',
-                'style': {
-                    'line-color': 'data(label_color)',
-                    'width': 1
-                }
-            }
-        ],
-    )
-
-    return cyto_graph, dark_cyto_graph, base_elements, temp_elements
+    return cyto_graph, base_elements
 
 
-base_cyto_graph, dark_cyto_graph, base_elements, dark_elements = create_network_graph()
+base_cyto_graph, base_elements = create_network_graph()
 
 # 核心节点ID集合
 

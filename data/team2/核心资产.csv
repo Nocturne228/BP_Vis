@@ -1,0 +1,13 @@
+id,name,type,industry,Industry and number
+IP_dcf3630d109e25e31f4ec590e83509d90a95874ed53e32914e0eb2f4b56e6639,117.18.xxx.xxx,IP,  ,"[['  ', 49]]"
+IP_2493d10250d8cfb277bb6217bd48e2863d4a1bf81fb6cc9e755f63a88a349f32,156.230.xxx.xxx,IP,  ,"[['  ', 49]]"
+IP_400c19e584976ff2a35950659d4d148a3d146f1b71692468132b849b0eb8702c,156.241.xxx.xxx,IP,  ,"[['  ', 49]]"
+Cert_d570aebdd3b0f0b4194315d8df020dc805f114401fe3c6999967f60de17b6176,d570aebdd3,Cert,  ,"[['  ', 50]]"
+Cert_c992a7d7f01fae6098d8f1ba358002074db1b977cceafc07c04b40e657ec0425,c992a7d7f0,Cert,  ,"[['  ', 60]]"
+IP_f9b588fa3410ab89fa0e50b011c9ac8ddfa4a3125ea3df13fa4598faa5e15f8a,45.114.xxx.xxx,IP,  ,"[['  ', 180]]"
+IP_36b2ba5b0800d154ef3add5672b7561af9535edd92d2c3323c64880498b45a05,45.114.xxx.xxx,IP,  ,"[['  ', 180]]"
+Cert_a77b63d27d07fd9cc522afb93664f99d9f56f9edadf84e44ef4537748dc19141,a77b63d27d,Cert,  ,"[['  ', 126]]"
+Cert_1b22e6e2c9f9d7afd041a1a0ef2178dbaaf3248c4261496a382ff46520d55e71,1b22e6e2c9,Cert,  ,"[['  ', 145]]"
+IP_12658a400c572d024701fd297ba84f7158d06a9ee3ada288148cbd6109ca8943,108.160.xxx.xxx,IP,  ,"[['  ', 85], ['B', 9], ['A', 9], ['C', 1], ['AB', 1]]"
+Cert_cb1db517c8df0fb663d3cb5655e4332011075c7da453e356ce3bd28a2ca67a21,cb1db517c8,Cert,  ,"[['AB', 1], ['  ', 1], ['B', 2], ['A', 3]]"
+Cert_c5be29cd161b2be120fdcce8939ab44c934c7203632228128dcd34b5aa249583,c5be29cd16,Cert,  ,"[['A', 2]]"
