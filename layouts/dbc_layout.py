@@ -1,4 +1,4 @@
-from dash import dcc, html
+from dash import dcc, html, callback, Input, Output
 import dash_bootstrap_components as dbc
 from graphs.figures import NetworkGraph, generate_pie_chart, generate_edge_pie_chart, generate_link_sankey
 from layouts.inputs import radio_items
@@ -6,7 +6,7 @@ from utils.color_palette import label_colors
 from graphs.network_graphs import base_cyto_graph
 
 network = NetworkGraph(number=1)
-fig = network.plot_network_graph()
+# fig = network.plot_network_graph()
 sankey_fig = generate_link_sankey()
 pie_chart = generate_pie_chart()
 edge_pie_chart = generate_edge_pie_chart()
@@ -24,41 +24,17 @@ badges = html.Span(
     ]
 )
 
-# switches = html.Div(
-#     [
-#         dbc.Label("展示关键信息"),
-#         dbc.Checklist(
-#             options=[
-#                 {"label": "显示核心资产", "value": 1},
-#                 {"label": "显示关键链路", "value": 2},
-#                 {"label": "默认显示", "value": 3, "disabled": True},
-#             ],
-#             value=[1],
-#             id="switches-input",
-#             switch=True,
-#         ),
-#     ]
-# )
 
 inputs = html.Div(
     [
-        dbc.Form([radio_items]),
+        dbc.Form([radio_items, ]),
+        html.Button('切换图表', id='toggle-button', n_clicks=0),
     ]
 )
 
 navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink("Source Code", href="https://github.com/Nocturne228/BP_Vis")),
-        # dbc.DropdownMenu(
-        #     children=[
-        #         dbc.DropdownMenuItem("More pages", header=True),
-        #         dbc.DropdownMenuItem("Page 2", href="#"),
-        #         dbc.DropdownMenuItem("Page 3", href="#"),
-        #     ],
-        #     nav=True,
-        #     in_navbar=True,
-        #     label="More",
-        # ),
     ],
     brand="黑灰产业网络资产图谱分析",
     brand_href="#",

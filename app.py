@@ -6,7 +6,7 @@ from layouts.dbc_layout import body_layout, navbar
 import dash_bootstrap_components as dbc
 
 
-app = Dash(external_stylesheets=[dbc.themes.VAPOR, 'layouts/styles.css'])
+app = Dash(external_stylesheets=[dbc.themes.VAPOR])
 
 # app.layout = app_layout
 app.layout = html.Div([navbar, body_layout])

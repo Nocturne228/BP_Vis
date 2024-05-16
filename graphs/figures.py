@@ -116,6 +116,31 @@ def generate_link_sankey():
     from utils.data_process import get_node_label
     node_labels = ['Domain', 'IP', 'Cert', 'Whois_Name', 'Whois_Phone', 'Whois_Email', 'IP_C', 'ASN']
 
+    # # 获取所有节点
+    # nodes = list(set(key_link['source'].unique()).union(set(key_link['target'].unique())))
+    # node_index = {node: idx for idx, node in enumerate(nodes)}
+    #
+    # # 准备数据
+    # links = []
+    # for _, row in key_link.iterrows():
+    #     source_idx = node_index[row['source']]
+    #     target_idx = node_index[row['target']]
+    #     links.append({'source': source_idx, 'target': target_idx, 'value': 1})
+    #
+    # # 创建 Sankey 图
+    # fig = go.Figure(go.Sankey(
+    #     node=dict(
+    #         pad=15,
+    #         thickness=20,
+    #         line=dict(color="black", width=0.5),
+    #     ),
+    #     link=dict(
+    #         source=[link['source'] for link in links],
+    #         target=[link['target'] for link in links],
+    #         value=[link['value'] for link in links],
+    #     )
+    # ))
+
     # 创建节点和链接信息
     nodes = list(node_labels)
     links = []
@@ -137,13 +162,15 @@ def generate_link_sankey():
             thickness=20,
             line=dict(color="black", width=0.5),
             label=nodes,
+            color=[label_colors[label] for label in nodes]
+
         ),
         link=dict(
             source=[link['source'] for link in links],
             target=[link['target'] for link in links],
             value=[link['value'] for link in links],
             label=[link['label'] for link in links],
-            color='rgba(86, 90, 203, 0.1)'  # 设置连线颜色
+            color=[label_colors[nodes[link['target']]] for link in links],
         )
     ))
 

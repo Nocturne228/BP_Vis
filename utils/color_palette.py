@@ -11,15 +11,16 @@ import matplotlib.colors as mcolors
 #     'ASN': '#ff6692'
 # }
 #
-# dark = {
-#     'Domain': '#2c3263',
-#     'Whois_Phone': '#64291a',
-#     'Whois_Email': '#005a43',
-#     'IP': '#4f3619',
-#     'IP_C': '#224717',
-#     'Cert': '#13455b',
-#     'ASN': '#5c2e2e'
-# }
+dark_label_colors = {
+    'Domain': '#2c3263',
+    'Whois_Phone': '#64291a',
+    'Whois_Email': '#005a43',
+    'Whois_Name': '#3e2a5a',
+    'IP': '#4f3619',
+    'IP_C': '#224717',
+    'Cert': '#13455b',
+    'ASN': '#5c2e2e'
+}
 
 label_colors = {
     'Domain': '#636EFA',

@@ -1,4 +1,4 @@
 id,name,type,industry,Industry and number
-IP_a92c36f7378b8c37485a34a1772696890e2c2c011e5aebf1ef907e8f946adf7e,123.1.xxx.xxx,IP,  ,"[['  ', 3], ['B', 2]]"
-Cert_1038bdca705e52f42dcce6fc12159ed6b77d299d7117592adfb4966cf766b7e7,156.239.xxx.xxx,IP,  ,"[['G', 2], ['  ', 2]]"
-Cert_52fbd9361538989d1464fbf4ceaeb6285b037d24003408a567fb5fd313bf3e87,392d981eaf,Cert,  ,"[['  ', 3], ['G', 2]]"
+Cert_87646b0f3e6fe83ef4e8b49f90848f9e0a5f635c15ff10f98132cf1637e961ff,123.1.xxx.xxx,IP,  ,"[['  ', 3], ['B', 2]]"
+Domain_649de7fe565b7626972a62113bfcbe999d20e178d89d9c4f4b3fdf0de69d6aee,156.239.xxx.xxx,IP,  ,"[['G', 2], ['  ', 2]]"
+Domain_34ca6a4a7c099f5727c64c60df902fa58d144c5d727c0ff96e44669cb8c8d5e2,392d981eaf,Cert,  ,"[['  ', 3], ['G', 2]]"
