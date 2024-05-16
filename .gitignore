@@ -103,7 +103,6 @@ __pypackages__/
 # Celery stuff
 celerybeat-schedule
 celerybeat.pid
-graph_test.ipynb
 
 # SageMath parsed files
 *.sage.py
@@ -212,3 +211,4 @@ Temporary Items
 
 .vscode
 .idea
+*.ipynb

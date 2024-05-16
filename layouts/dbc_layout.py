@@ -24,7 +24,6 @@ badges = html.Span(
     ]
 )
 
-
 inputs = html.Div(
     [
         dbc.Form([radio_items, ]),
@@ -48,53 +47,73 @@ body_layout = dbc.Container(
             [
                 dbc.Col(
                     [
-                        dbc.Col(
-                            [
-                                dbc.Alert(
-                                    id='cytoscape-tapNodeData-output',
-                                    children='tap to display info of node',
-                                    color='secondary',
-                                ),
-                                dbc.Alert(
-                                    id='cytoscape-tapEdgeData-output'
-                                ),
-                            ],
+                        dbc.Alert(
+                            id='cytoscape-tapNodeData-output',
+                            children='tap to display info of node',
+                            color='secondary',
                         ),
-                        dbc.Col(
-                            [
-                                inputs,
-                                # html.P(id='radio-item-output')
-                                html.Div(id='radio-item-output', style={'display': 'none'})  # 隐藏的输出组件
-                            ],
+                        dbc.Alert(
+                            id='cytoscape-tapEdgeData-output'
                         ),
-                        dbc.Col(
-                            [
-                                badges,
-                            ]
-                        ),
+                        inputs,
+                        # html.P(id='radio-item-output')
+                        html.Div(id='radio-item-output', style={'display': 'none'}),  # 隐藏的输出组件
+                        badges,
                     ],
                     width=2
                 ),
                 dbc.Col(
                     [
                         base_cyto_graph,
-                        dcc.Graph(figure=sankey_fig)
+                        # dcc.Graph(figure=sankey_fig)
                     ],
                 ),
                 dbc.Col(
                     [
                         dbc.Row(
                             [
-                                dcc.Graph(figure=pie_chart),
-                                dcc.Graph(figure=edge_pie_chart),
+                                dbc.Col(
+                                    [
+                                        dcc.Graph(figure=pie_chart),
+                                    ],
+                                    className='no-gutters',
+                                ),
+                                dbc.Col(
+                                    [
+                                        # dcc.Graph(figure=sankey_fig),
+                                        dcc.Graph(figure=edge_pie_chart),
+                                    ],
+                                    className='no-gutters',
+                                )
                             ]
                         ),
                         # dcc.Graph(figure=pie_chart),
                         # dcc.Graph(figure=edge_pie_chart),
                     ],
-                    width=4
                 )
             ],
+        ),
+        dbc.Row(
+            [
+                dbc.Col(
+                    [
+                        dcc.Graph(figure=sankey_fig),
+                    ],
+                    width=4,
+                ),
+                dbc.Col(
+                    [
+                        dcc.Graph(figure=pie_chart),
+                    ],
+                    width=4,
+                ),
+                dbc.Col(
+                    [
+                        dcc.Graph(figure=edge_pie_chart),
+                    ],
+                    width=4,
+                ),
+            ]
         ),
     ],
     style={"marginTop": 20},

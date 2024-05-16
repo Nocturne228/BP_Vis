@@ -82,7 +82,7 @@ def generate_pie_chart():
 
     # 创建饼图并显示图例
     fig = px.pie(names=type_counts_df['type'], values=type_counts_df['count'],
-                 title='资产类型组成', height=350, width=500)
+                 title='资产类型组成', height=300, width=500)
 
     fig.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)', paper_bgcolor='rgba(0,0,0,0)',
                       legend_font_color='white', title_font_color='white')
@@ -100,7 +100,7 @@ def generate_edge_pie_chart():
 
     # 创建饼图并显示图例
     fig = px.pie(names=type_counts_df['type'], values=type_counts_df['count'],
-                 title='关系类型组成', height=350, width=500)
+                 title='关系类型组成', height=300, width=500)
 
     fig.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)', paper_bgcolor='rgba(0,0,0,0)',
                       legend_font_color='white', title_font_color='white')
@@ -116,32 +116,6 @@ def generate_link_sankey():
     from utils.data_process import get_node_label
     node_labels = ['Domain', 'IP', 'Cert', 'Whois_Name', 'Whois_Phone', 'Whois_Email', 'IP_C', 'ASN']
 
-    # # 获取所有节点
-    # nodes = list(set(key_link['source'].unique()).union(set(key_link['target'].unique())))
-    # node_index = {node: idx for idx, node in enumerate(nodes)}
-    #
-    # # 准备数据
-    # links = []
-    # for _, row in key_link.iterrows():
-    #     source_idx = node_index[row['source']]
-    #     target_idx = node_index[row['target']]
-    #     links.append({'source': source_idx, 'target': target_idx, 'value': 1})
-    #
-    # # 创建 Sankey 图
-    # fig = go.Figure(go.Sankey(
-    #     node=dict(
-    #         pad=15,
-    #         thickness=20,
-    #         line=dict(color="black", width=0.5),
-    #     ),
-    #     link=dict(
-    #         source=[link['source'] for link in links],
-    #         target=[link['target'] for link in links],
-    #         value=[link['value'] for link in links],
-    #     )
-    # ))
-
-    # 创建节点和链接信息
     nodes = list(node_labels)
     links = []
     for index, row in key_link.iterrows():
