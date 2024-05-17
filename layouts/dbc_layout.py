@@ -1,8 +1,9 @@
 from dash import dcc, html, callback, Input, Output
 import dash_bootstrap_components as dbc
+
 from graphs.figures import NetworkGraph, generate_pie_chart, generate_edge_pie_chart, generate_link_sankey
 from layouts.inputs import radio_items
-from utils.color_palette import label_colors
+from layouts.components import button_group, badges
 from graphs.network_graphs import base_cyto_graph
 
 network = NetworkGraph(number=1)
@@ -11,23 +12,8 @@ sankey_fig = generate_link_sankey()
 pie_chart = generate_pie_chart()
 edge_pie_chart = generate_edge_pie_chart()
 
-badges = html.Span(
-    [
-        dbc.Badge("Domain", pill=True, color=label_colors["Domain"], className="me-1"),
-        dbc.Badge("Whois_Phone", pill=True, color=label_colors["Whois_Phone"], className="me-1"),
-        dbc.Badge("Whois_Email", pill=True, color=label_colors["Whois_Email"], className="me-1"),
-        dbc.Badge("Whois_Name", pill=True, color=label_colors["Whois_Name"], className="me-1"),
-        dbc.Badge("IP", pill=True, color=label_colors["IP"], className="me-1"),
-        dbc.Badge("IP_C", pill=True, color=label_colors["IP_C"], className="me-1"),
-        dbc.Badge("Cert", pill=True, color=label_colors["Cert"], className="me-1"),
-        dbc.Badge("ASN", pill=True, color=label_colors["ASN"], className="me-1"),
-    ]
-)
-
 inputs = html.Div(
     [
-        dbc.Form([radio_items, ]),
-        html.Button('切换图表', id='toggle-button', n_clicks=0),
     ]
 )
 
@@ -57,13 +43,13 @@ body_layout = dbc.Container(
                         ),
                         inputs,
                         # html.P(id='radio-item-output')
-                        html.Div(id='radio-item-output', style={'display': 'none'}),  # 隐藏的输出组件
                         badges,
                     ],
                     width=2
                 ),
                 dbc.Col(
                     [
+                        button_group,
                         base_cyto_graph,
                         # dcc.Graph(figure=sankey_fig)
                     ],
