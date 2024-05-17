@@ -1,7 +1,6 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 
-
 from utils.color_palette import label_colors
 
 button_group = html.Div(
@@ -23,7 +22,6 @@ button_group = html.Div(
     className="radio-group",
 )
 
-
 badges = html.Span(
     [
         dbc.Badge("Domain", pill=True, color=label_colors["Domain"], className="me-1"),
@@ -35,4 +33,26 @@ badges = html.Span(
         dbc.Badge("Cert", pill=True, color=label_colors["Cert"], className="me-1"),
         dbc.Badge("ASN", pill=True, color=label_colors["ASN"], className="me-1"),
     ]
+)
+
+node_card = dbc.Card(
+    [
+        dbc.CardHeader("资产节点信息"),
+        dbc.CardBody([
+            dbc.ListGroup(id='cytoscape-tapNodeData-output')
+        ])
+    ],
+    color='primary',
+    outline=True,
+)
+
+edge_card = dbc.Card(
+    [
+        dbc.CardHeader("资产链路信息"),
+        dbc.CardBody([
+            dbc.ListGroup(id='cytoscape-tapEdgeData-output')
+        ])
+    ],
+    color='secondary',
+    outline=True,
 )

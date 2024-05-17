@@ -2,9 +2,9 @@ from dash import dcc, html, callback, Input, Output
 import dash_bootstrap_components as dbc
 
 from graphs.figures import NetworkGraph, generate_pie_chart, generate_edge_pie_chart, generate_link_sankey
-from layouts.inputs import radio_items
-from layouts.components import button_group, badges
+from layouts.components import button_group, badges, node_card, edge_card
 from graphs.network_graphs import base_cyto_graph
+from layouts.inputs import layout_inputs
 
 network = NetworkGraph(number=1)
 # fig = network.plot_network_graph()
@@ -12,10 +12,7 @@ sankey_fig = generate_link_sankey()
 pie_chart = generate_pie_chart()
 edge_pie_chart = generate_edge_pie_chart()
 
-inputs = html.Div(
-    [
-    ]
-)
+
 
 navbar = dbc.NavbarSimple(
     children=[
@@ -33,17 +30,7 @@ body_layout = dbc.Container(
             [
                 dbc.Col(
                     [
-                        dbc.Alert(
-                            id='cytoscape-tapNodeData-output',
-                            children='tap to display info of node',
-                            color='secondary',
-                        ),
-                        dbc.Alert(
-                            id='cytoscape-tapEdgeData-output'
-                        ),
-                        inputs,
-                        # html.P(id='radio-item-output')
-                        badges,
+                        layout_inputs
                     ],
                     width=2
                 ),
@@ -53,6 +40,7 @@ body_layout = dbc.Container(
                         base_cyto_graph,
                         # dcc.Graph(figure=sankey_fig)
                     ],
+                    width=6
                 ),
                 dbc.Col(
                     [
@@ -60,22 +48,14 @@ body_layout = dbc.Container(
                             [
                                 dbc.Col(
                                     [
-                                        dcc.Graph(figure=pie_chart),
-                                    ],
-                                    className='no-gutters',
+                                        node_card,
+                                        edge_card
+                                    ]
                                 ),
-                                dbc.Col(
-                                    [
-                                        # dcc.Graph(figure=sankey_fig),
-                                        dcc.Graph(figure=edge_pie_chart),
-                                    ],
-                                    className='no-gutters',
-                                )
                             ]
                         ),
-                        # dcc.Graph(figure=pie_chart),
-                        # dcc.Graph(figure=edge_pie_chart),
                     ],
+                    width=4,
                 )
             ],
         ),

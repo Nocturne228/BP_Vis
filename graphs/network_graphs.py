@@ -65,7 +65,7 @@ initial_elements = base_elements
 base_cyto_graph = cyto.Cytoscape(
     id='base-cyto-graph',
     layout={'name': 'cose'},
-    style={'width': '500px', 'height': '600px'},
+    style={'width': '600px', 'height': '600px'},
     elements=initial_elements,
     stylesheet=[
         {
