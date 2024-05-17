@@ -214,3 +214,4 @@ Temporary Items
 .vscode
 .idea
 *.ipynb
+*.pyc
