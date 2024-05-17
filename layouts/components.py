@@ -56,3 +56,14 @@ edge_card = dbc.Card(
     color='secondary',
     outline=True,
 )
+
+navbar = dbc.NavbarSimple(
+    children=[
+        dbc.NavItem(dbc.NavLink("Source Code", href="https://github.com/Nocturne228/BP_Vis")),
+    ],
+    brand="黑灰产业网络资产图谱分析",
+    brand_href="#",
+    color="primary",
+    dark=True,
+)
+

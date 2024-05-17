@@ -1,28 +1,11 @@
 from dash import dcc, html, callback, Input, Output
 import dash_bootstrap_components as dbc
 
-from graphs.figures import NetworkGraph, generate_pie_chart, generate_edge_pie_chart, generate_link_sankey
-from layouts.components import button_group, badges, node_card, edge_card
+from layouts.components import button_group, badges, node_card, edge_card, navbar
 from graphs.network_graphs import base_cyto_graph
 from layouts.inputs import layout_inputs
+from figures.fig_collections import sankey_fig, pie_chart, edge_pie_chart
 
-network = NetworkGraph(number=1)
-# fig = network.plot_network_graph()
-sankey_fig = generate_link_sankey()
-pie_chart = generate_pie_chart()
-edge_pie_chart = generate_edge_pie_chart()
-
-
-
-navbar = dbc.NavbarSimple(
-    children=[
-        dbc.NavItem(dbc.NavLink("Source Code", href="https://github.com/Nocturne228/BP_Vis")),
-    ],
-    brand="黑灰产业网络资产图谱分析",
-    brand_href="#",
-    color="primary",
-    dark=True,
-)
 
 body_layout = dbc.Container(
     [
@@ -30,7 +13,8 @@ body_layout = dbc.Container(
             [
                 dbc.Col(
                     [
-                        layout_inputs
+                        layout_inputs,
+                        badges
                     ],
                     width=2
                 ),

@@ -1,6 +1,6 @@
 from dash import html, dcc
 from interactions.callbacks import display_tap_node_data
-from graphs.figures import NetworkGraph
+from graphs.data_figures import NetworkGraph
 import dash_bootstrap_components as dbc
 from layouts.inputs import layout_inputs
 
