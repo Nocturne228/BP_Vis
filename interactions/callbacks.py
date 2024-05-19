@@ -176,24 +176,44 @@ def display_graph_info(value, old_elements):
         pass
 
     elif value == 2:
+        # for element in old_elements:
+        #     if 'source' in element['data'] and 'target' in element['data']:
+        #         element['data']['label_color'] = dark_label_colors.get(
+        #             get_node_label(element['data']['target']), '#FFFFFF'
+        #         )
+        #         for index, row in key_link.iterrows():
+        #             source = row['source']
+        #             target = row['target']
+        #
+        #             if element['data']['source'] == source and element['data']['target'] == target:
+        #                 element['data']['label_color'] = adjust_brightness(element['data']['label_color'], factor=2.0)
+        #
+        #     else:
+        #         nodes = list(set(key_link['source']) | set(key_link['target']))  # 获取所有节点
+        #         if element['data']['id'] in nodes:
+        #             pass
+        #         else:
+        #             element['data']['label_color'] = dark_label_colors.get(element['data']['label'], '#000000')
+        key_links = list(zip(key_link['source'], key_link['target']))
+        counter = 1
+        # 获取 source 和 target 列
+        sources = key_link['source'].tolist()
+        targets = key_link['target'].tolist()
+        # 创建包含所有唯一节点的集合
+        node_in_key_links = set(sources).union(set(targets))
+
         for element in old_elements:
             if 'source' in element['data'] and 'target' in element['data']:
-                element['data']['label_color'] = dark_label_colors.get(
-                    get_node_label(element['data']['target']), '#FFFFFF'
-                )
-                for index, row in key_link.iterrows():
-                    source = row['source']
-                    target = row['target']
-
-                    if element['data']['source'] == source and element['data']['target'] == target:
-                        element['data']['label_color'] = adjust_brightness(element['data']['label_color'], factor=2.0)
-
+                edge_color_type = get_node_label(element['data']['target'])
+                element['data']['label_color'] = dark_label_colors.get(edge_color_type, '#000000')
+                if (element['data']['source'], element['data']['target']) in key_links or \
+                        (element['data']['target'], element['data']['source']) in key_links:
+                    print(counter)
+                    counter += 1
+                    element['data']['label_color'] = label_colors.get(edge_color_type, '#FFFFFF')
             else:
-                nodes = list(set(key_link['source']) | set(key_link['target']))  # 获取所有节点
-                if element['data']['id'] in nodes:
-                    pass
-                else:
-                    element['data']['label_color'] = dark_label_colors.get(element['data']['label'], '#000000')
+                if element['data']['id'] not in node_in_key_links:
+                    element['data']['label_color'] = dark_label_colors.get(element['data']['label'], '#FFFFFF')
 
     else:
         for element in old_elements:

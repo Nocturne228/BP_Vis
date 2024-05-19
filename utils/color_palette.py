@@ -36,7 +36,7 @@ edge_colors = {
     'r_cert': '#19D3F3',
     'r_subdomain': '#636EFA',
     'r_request_jump': '#636EFA',
-    'r_dns_a': '#FFA15A',
+    'r_dns_a': '#ffbe18',
     'r_whois_name': '#AB63FA',
     'r_whois_email': '#00CC96',
     'r_whois_phone': '#EF553B',

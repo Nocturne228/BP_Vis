@@ -13,8 +13,6 @@ for i, row in nodes_df.iterrows():
 for i, row in edges_df.iterrows():
     g.add_edge(row['source'], row['target'], label=row['relation'])
 
-# pos = nx.spring_layout(g)
-
 base_elements = []
 # 添加节点到元素列表，并使用计算的位置信息
 for node_id, node_attrs in g.nodes(data=True):
@@ -25,23 +23,23 @@ for node_id, node_attrs in g.nodes(data=True):
             'id': node_id, 'label': node_attrs['label'], 'label_color': node_color,
             'name': node_attrs['name'], 'industry': node_attrs['industry']
         },
-        # 'position': {'x': pos[node_id][0] * 500, 'y': pos[node_id][1] * 500}
     })
 
 # 添加边到元素列表
-for u, v, data in g.edges(data=True):
+for v, u, data in g.edges(data=True):
+    # v是target，u是source
+    # g的edge存储方式是u->target, v->source
     edge_color = edge_colors.get(data['label'], '#FFFFFF')
     base_elements.append({
         'data': {'source': u, 'target': v, 'label': data['label'], 'label_color': edge_color}
     })
 
-initial_elements = base_elements
 
 base_cyto_graph = cyto.Cytoscape(
     id='base-cyto-graph',
     layout={'name': 'cose'},
     style={'width': '600px', 'height': '600px'},
-    elements=initial_elements,
+    elements=base_elements,
     stylesheet=[
         {
             'selector': 'node',
