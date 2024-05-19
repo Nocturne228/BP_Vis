@@ -20,19 +20,41 @@ layout_inputs = html.Div([
     ], className="row"),
 ])
 
-
-radio_items = html.Div(
+graph_layouts_select = html.Div(
     [
-        dbc.Label("展示关键信息"),
-        dbc.RadioItems(
-            options=[
-                {"label": "显示核心资产", "value": 1},
-                {"label": "显示关键链路", "value": 2},
-                {"label": "默认展示", "value": 3},
+        dbc.Label("图谱布局", class_name='mt-3', color='white'),
+        dbc.Select(
+            [
+                "cose",
+                "random",
+                "concentric",
+                "circle",
+                "grid",
+                "breadthfirst",
             ],
-            value=3,
-            id="radio-items-input",
+            "cose",
+            id="dropdown-update-layout",
+            class_name='mb-4'
         ),
-    ]
+    ],
 )
 
+jumps_input_group = html.Div(
+    dbc.InputGroup(
+        [
+            dbc.Label('查询邻居节点和链路', color='white'),
+            dbc.Button("查询", id="check-node-subgraph-button", n_clicks=0),
+            dbc.Input(id="jumps-button-input", type='number', placeholder="输入跳数", class_name='form-control'),
+        ],
+        class_name='mb-4'
+    ),
+)
+
+inputs_container = html.Div([
+    dbc.Label('图信息选项', color='white', class_name='h3'),
+    html.Div([
+        # layout_inputs,
+        graph_layouts_select,
+        jumps_input_group
+    ], className="input-box")
+])

@@ -1,10 +1,9 @@
 import pandas as pd
 import networkx as nx
-import numpy as np
-import dash_cytoscape as cyto
-from dash import callback, Input, Output
 import plotly.express as px
 import plotly.graph_objects as go
+
+
 from data.data_df import nodes_df, edges_df, core_node, key_link
 from utils.color_palette import label_colors
 

@@ -1,19 +1,19 @@
+import pandas as pd
 import networkx as nx
+import dash_bootstrap_components as dbc
 import dash_cytoscape as cyto
+from dash import Dash
 
+from utils.color_palette import label_colors, dark_label_colors, edge_colors
 
-from data.data_df import nodes_df, edges_df, core_node, key_link
-from utils.color_palette import label_colors, edge_colors, dark_label_colors
-
-core_ids = set(core_node['id'])
+nodes_df = pd.read_csv('data/team1/node.csv')
+edges_df = pd.read_csv('data/team1/link.csv')
 
 g = nx.Graph()
 for i, row in nodes_df.iterrows():
     g.add_node(row['id'], label=row['type'], name=row['name'], industry=row['industry'])
 for i, row in edges_df.iterrows():
     g.add_edge(row['source'], row['target'], label=row['relation'])
-
-# pos = nx.spring_layout(g)
 
 base_elements = []
 # 添加节点到元素列表，并使用计算的位置信息
@@ -35,13 +35,11 @@ for u, v, data in g.edges(data=True):
         'data': {'source': u, 'target': v, 'label': data['label'], 'label_color': edge_color}
     })
 
-initial_elements = base_elements
-
 base_cyto_graph = cyto.Cytoscape(
     id='base-cyto-graph',
     layout={'name': 'cose'},
     style={'width': '600px', 'height': '600px'},
-    elements=initial_elements,
+    elements=base_elements,
     stylesheet=[
         {
             'selector': 'node',
@@ -62,3 +60,17 @@ base_cyto_graph = cyto.Cytoscape(
         }
     ],
 )
+
+
+body = dbc.Container(
+    dbc.Row(
+        base_cyto_graph
+    )
+)
+
+app = Dash(external_stylesheets=[dbc.themes.VAPOR])
+app.layout = body
+
+if __name__ == '__main__':
+    app.run(debug=True)
+

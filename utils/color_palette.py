@@ -16,7 +16,7 @@ dark_label_colors = {
     'Whois_Phone': '#64291a',
     'Whois_Email': '#005a43',
     'Whois_Name': '#3e2a5a',
-    'IP': '#4f3619',
+    'IP': '#3e2618',
     'IP_C': '#224717',
     'Cert': '#13455b',
     'ASN': '#5c2e2e'
@@ -27,7 +27,7 @@ label_colors = {
     'Whois_Phone': '#EF553B',
     'Whois_Email': '#00CC96',
     'Whois_Name': '#AB63FA',
-    'IP': '#FFA15A',
+    'IP': '#ffbe18',
     'IP_C': '#5fab28',
     'Cert': '#19D3F3',
     'ASN': '#FF6692'

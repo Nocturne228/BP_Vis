@@ -3,7 +3,7 @@ import dash_bootstrap_components as dbc
 
 from layouts.components import button_group, badges, node_card, edge_card, navbar
 from graphs.network_graphs import base_cyto_graph
-from layouts.inputs import layout_inputs
+from layouts.inputs import inputs_container
 from figures.fig_collections import sankey_fig, pie_chart, edge_pie_chart
 
 
@@ -13,8 +13,7 @@ body_layout = dbc.Container(
             [
                 dbc.Col(
                     [
-                        layout_inputs,
-                        badges
+                        inputs_container,
                     ],
                     width=2
                 ),
