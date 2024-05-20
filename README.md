@@ -18,4 +18,10 @@ http://127.0.0.1:8050/
 
 # 界面
 
-![展示](assets/display.png)
+展示关键链路
+
+![展示](assets/display1.png)
+
+展示黑灰产业及其图例
+
+![产业](assets/display2.png)

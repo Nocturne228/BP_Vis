@@ -1,5 +1,6 @@
 import networkx as nx
 import dash_cytoscape as cyto
+import json
 
 
 from data.data_df import nodes_df, edges_df, core_node, key_link
@@ -21,7 +22,7 @@ for node_id, node_attrs in g.nodes(data=True):
     base_elements.append({
         'data': {
             'id': node_id, 'label': node_attrs['label'], 'label_color': node_color,
-            'name': node_attrs['name'], 'industry': node_attrs['industry']
+            'name': node_attrs['name'], 'industry': node_attrs['industry'],
         },
     })
 
@@ -31,14 +32,14 @@ for v, u, data in g.edges(data=True):
     # g的edge存储方式是u->target, v->source
     edge_color = edge_colors.get(data['label'], '#FFFFFF')
     base_elements.append({
-        'data': {'source': u, 'target': v, 'label': data['label'], 'label_color': edge_color}
+        'data': {'source': u, 'target': v, 'label': data['label'], 'label_color': edge_color},
     })
 
 
 base_cyto_graph = cyto.Cytoscape(
     id='base-cyto-graph',
     layout={'name': 'cose'},
-    style={'width': '600px', 'height': '600px'},
+    style={'width': '600px', 'height': '600px', 'position': 'absolute'},
     elements=base_elements,
     stylesheet=[
         {
@@ -60,3 +61,8 @@ base_cyto_graph = cyto.Cytoscape(
         }
     ],
 )
+
+nodes_df['industry'] = nodes_df['industry'].apply(lambda x: json.loads(x.replace("'", '"')))
+filtered_nodes = nodes_df[nodes_df['industry'].apply(len) > 0]
+
+

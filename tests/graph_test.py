@@ -46,6 +46,8 @@ def generate_node_styles(elements, show_colors):
                 'background-image': background,
                 'background-fit': 'cover cover',
                 'background-clip': 'node',
+                'width': 20,  # 设置节点宽度
+                'height': 20,  # 设置节点高度
             }
         })
     return styles

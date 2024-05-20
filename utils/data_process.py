@@ -1,3 +1,5 @@
+import re
+
 industry_mapping = {
     'A': '涉黄',
     'B': '涉赌',
@@ -9,6 +11,27 @@ industry_mapping = {
     'H': '非法支付平台',
     'I': '其他'
 }
+
+industry_colors = {
+    'A': '#fcff00',  # 涉黄
+    'B': '#fa3586',  # 涉赌
+    'C': '#5733FF',  # 诈骗
+    'D': '#acff1a',  # 涉毒
+    'E': '#FF33FF',  # 涉枪
+    'F': '#33FFFF',  # 黑客
+    'G': '#FF8C00',  # 非法交易平台
+    'H': '#9eb9ff',  # 非法支付平台
+    'I': '#00FA9A'  # 其他
+}
+
+
+def get_color_for_industry(industry_codes):
+    industry_codes_list = re.findall(r"'(\w+)'", industry_codes)
+    colors = []
+    for code in industry_codes_list:
+        color = industry_colors.get(code, '#000000')  # 默认黑色
+        colors.append(color)
+    return colors
 
 
 def get_node_label(node_id):

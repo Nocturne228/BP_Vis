@@ -1,9 +1,9 @@
 import dash_bootstrap_components as dbc
 from dash import Input, Output, State, callback, html
 
-from graphs.network_graphs import core_ids, key_link
-from utils.data_process import get_node_label, industry_mapping, get_neighbors_with_edges
-from utils.color_palette import adjust_brightness, dark_label_colors, label_colors
+from graphs.network_graphs import core_ids, key_link, filtered_nodes
+from utils.data_process import get_node_label, industry_mapping, get_neighbors_with_edges, get_color_for_industry
+from utils.color_palette import adjust_brightness, dark_label_colors, label_colors, generate_svg
 
 
 @callback(
@@ -146,13 +146,17 @@ def display_tap_edge_data(data):
 
 
 @callback(
-    Output("base-cyto-graph", "elements"),
+    [
+        Output("base-cyto-graph", "elements"),
+        Output("base-cyto-graph", "stylesheet"),
+    ],
     [
         Input("radios-button-group", "value"),
-        State("base-cyto-graph", "elements")
+        State("base-cyto-graph", "elements"),
+        State("base-cyto-graph", "stylesheet"),
     ]
 )
-def display_graph_info(value, old_elements):
+def display_graph_info(value, old_elements, old_stylesheet):
     """
     接收按钮值，控制图谱的信息展示，如关键链路和核心资产节点
 
@@ -161,9 +165,29 @@ def display_graph_info(value, old_elements):
     2->显示关键链路
     3->显示核心资产
     """
+    stylesheet = [
+        {
+            'selector': 'node',
+            'style': {
+                'background-color': 'data(label_color)',
+                'width': 10,  # 设置节点宽度
+                'height': 10,  # 设置节点高度
+                'border-width': 1,  # 边缘宽度
+                'border-color': 'data(border_color)',  # 边缘颜色
+            }
+        },
+        {
+            'selector': 'edge',
+            'style': {
+                'line-color': 'data(label_color)',
+                'width': 1,
+            }
+        }
+    ]
 
     for element in old_elements:
-        if 'id' in element['data']:
+
+        if 'industry' in element['data']:
             if element['data']['label_color'] == dark_label_colors.get(element['data']['label'], '#000000'):
                 element['data']['label_color'] = label_colors.get(element['data']['label'], '#FFFFFF')
 
@@ -215,7 +239,7 @@ def display_graph_info(value, old_elements):
 
     elif value == 3:
         for element in old_elements:
-            if 'id' in element['data']:
+            if 'industry' in element['data']:
                 if element['data']['id'] not in core_ids:
                     element['data']['label_color'] = dark_label_colors.get(element['data']['label'], '#000000')
 
@@ -225,9 +249,63 @@ def display_graph_info(value, old_elements):
                 element['data']['label_color'] = edge_label_color
 
     else:
-        pass
+        global_node_style = {
+            'selector': 'node',
+            'style': {
+                'background-color': 'data(label_color)',
+                'width': 10,
+                'height': 10,
+                'border-width': 1,
+                'border-color': 'data(border_color)',
+            }
+        }
 
-    return old_elements
+        global_edge_style = {
+            'selector': 'edge',
+            'style': {
+                'line-color': 'data(label_color)',
+                'width': 1,
+            }
+        }
+
+        style = []
+        for element in old_elements:
+            if 'industry' in element['data']:
+                if element['data']['id'] not in filtered_nodes['id'].tolist():
+                    element['data']['label_color'] = dark_label_colors.get(element['data']['label'], '#000000')
+
+            else:
+                edge_color_type = get_node_label(element['data']['target'])
+                edge_label_color = dark_label_colors.get(edge_color_type, '#FFFFFF')
+                element['data']['label_color'] = edge_label_color
+
+        for element in old_elements:
+            if 'industry' in element['data']:
+                for key, node in filtered_nodes.iterrows():
+                    if element['data']['id'] == node['id']:
+                        colors = get_color_for_industry(element['data']['industry'])
+                        background = generate_svg(colors)
+                        style.append({
+                            'selector': f'node[id = "{element["data"]["id"]}"]',
+                            'style': {
+                                'background-image': background,
+                                'background-fit': 'cover cover',
+                                'background-clip': 'node',
+                                'width': 20,  # 设置节点宽度
+                                'height': 20,  # 设置节点高度
+                            }
+                        })
+
+            else:
+                break
+        # 将全体节点样式和边样式添加到主样式表 stylesheet 中
+        stylesheet = [global_node_style, global_edge_style]
+        # 将新样式列表 style 添加到主样式表 stylesheet 中
+        stylesheet.extend(style)
+        # pass
+    # old_stylesheet = stylesheet
+
+    return old_elements, stylesheet
 
 
 @callback(Output("base-cyto-graph", 'layout'),
@@ -257,3 +335,15 @@ def toggle_button(radio_value):
         return True
     else:
         return False
+
+
+# 回调函数：根据radios-button-group的值控制图例组件的显示与隐藏
+@callback(
+    Output("legend-html-component", "style"),
+    Input("radios-button-group", "value"),
+)
+def toggle_legend_display(value):
+    if value == 4:
+        return {"display": "block"}  # 显示图例组件
+    else:
+        return {"display": "none"}  # 隐藏图例组件

@@ -1,4 +1,4 @@
-from dash import html
+from dash import html, dcc
 import dash_bootstrap_components as dbc
 
 from utils.color_palette import label_colors
@@ -67,3 +67,46 @@ navbar = dbc.NavbarSimple(
     color="primary",
     dark=True,
 )
+
+legend_html = """
+<div style="padding: 10px; border: 1px solid transparent; border-radius: 5px; background-color: transparent;">
+    <div style="display: flex; align-items: center;">
+        <div style="width: 20px; height: 20px; background-color: #fcff00; border: 1px solid #ccc; border-radius: 5px;"></div>
+        <div style="margin-left: 5px;">涉黄</div>
+    </div>
+    <div style="display: flex; align-items: center; margin-top: 5px;">
+        <div style="width: 20px; height: 20px; background-color: #fa3586; border: 1px solid #ccc; border-radius: 5px;"></div>
+        <div style="margin-left: 5px;">涉赌</div>
+    </div>
+    <div style="display: flex; align-items: center; margin-top: 5px;">
+        <div style="width: 20px; height: 20px; background-color: #5733FF; border: 1px solid #ccc; border-radius: 5px;"></div>
+        <div style="margin-left: 5px;">诈骗</div>
+    </div>
+    <div style="display: flex; align-items: center; margin-top: 5px;">
+        <div style="width: 20px; height: 20px; background-color: #acff1a; border: 1px solid #ccc; border-radius: 5px;"></div>
+        <div style="margin-left: 5px;">涉毒</div>
+    </div>
+    <div style="display: flex; align-items: center; margin-top: 5px;">
+        <div style="width: 20px; height: 20px; background-color: #FF33FF; border: 1px solid #ccc; border-radius: 5px;"></div>
+        <div style="margin-left: 5px;">涉枪</div>
+    </div>
+    <div style="display: flex; align-items: center; margin-top: 5px;">
+        <div style="width: 20px; height: 20px; background-color: #33FFFF; border: 1px solid #ccc; border-radius: 5px;"></div>
+        <div style="margin-left: 5px;">黑客</div>
+    </div>
+    <div style="display: flex; align-items: center; margin-top: 5px;">
+        <div style="width: 20px; height: 20px; background-color: #FF8C00; border: 1px solid #ccc; border-radius: 5px;"></div>
+        <div style="margin-left: 5px;">非法交易平台</div>
+    </div>
+    <div style="display: flex; align-items: center; margin-top: 5px;">
+        <div style="width: 20px; height: 20px; background-color: #9eb9ff; border: 1px solid #ccc; border-radius: 5px;"></div>
+        <div style="margin-left: 5px;">非法支付平台</div>
+    </div>
+    <div style="display: flex; align-items: center; margin-top: 5px;">
+        <div style="width: 20px; height: 20px; background-color: #00FA9A; border: 1px solid #ccc; border-radius: 5px;"></div>
+        <div style="margin-left: 5px;">其他</div>
+    </div>
+</div>
+"""
+
+legend_html_component = dcc.Markdown(legend_html, dangerously_allow_html=True)

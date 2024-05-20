@@ -1,4 +1,5 @@
 import matplotlib.colors as mcolors
+import base64
 
 # bright_colors = {
 #     'Domain': '#6570ff',
@@ -80,3 +81,34 @@ def reduce_brightness(hex_color, factor=0.5):
 
     # Convert RGB back to hex
     return '#{:02x}{:02x}{:02x}'.format(r_new, g_new, b_new)
+
+
+# 生成 SVG 图像
+def generate_svg(colors):
+    rect_width = 100 / len(colors)
+    svg_parts = [f'<rect width="{rect_width}%" height="100%" x="{i * rect_width}%" fill="{color}" />' for i, color in
+                 enumerate(colors)]
+    svg_content = ''.join(svg_parts)
+    svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">{svg_content}</svg>'
+    svg_base64 = base64.b64encode(svg.encode('utf-8')).decode('utf-8')
+    return f'data:image/svg+xml;base64,{svg_base64}'
+
+
+# def generate_node_styles(elements, show_colors):
+#     styles = []
+#     for element in elements:
+#         if element['data']['id'] in filtered_nodes['id'].tolist():
+#             colors = element['data'].get('colors', [])
+#             if colors:
+#                 background = generate_svg(colors)
+#
+#         styles.append({
+#             'selector': f'node[id = "{element["data"]["id"]}"]',
+#             'style': {
+#                 'background-image': background,
+#                 'background-fit': 'cover cover',
+#                 'background-clip': 'node',
+#             }
+#         })
+#     return styles
+
