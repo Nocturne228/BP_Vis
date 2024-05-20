@@ -208,14 +208,12 @@ def display_graph_info(value, old_elements):
                 element['data']['label_color'] = dark_label_colors.get(edge_color_type, '#000000')
                 if (element['data']['source'], element['data']['target']) in key_links or \
                         (element['data']['target'], element['data']['source']) in key_links:
-                    print(counter)
-                    counter += 1
                     element['data']['label_color'] = label_colors.get(edge_color_type, '#FFFFFF')
             else:
                 if element['data']['id'] not in node_in_key_links:
                     element['data']['label_color'] = dark_label_colors.get(element['data']['label'], '#FFFFFF')
 
-    else:
+    elif value == 3:
         for element in old_elements:
             if 'id' in element['data']:
                 if element['data']['id'] not in core_ids:
@@ -225,6 +223,9 @@ def display_graph_info(value, old_elements):
                 edge_color_type = get_node_label(element['data']['target'])
                 edge_label_color = dark_label_colors.get(edge_color_type, '#FFFFFF')
                 element['data']['label_color'] = edge_label_color
+
+    else:
+        pass
 
     return old_elements
 

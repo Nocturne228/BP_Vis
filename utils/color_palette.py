@@ -13,7 +13,7 @@ import matplotlib.colors as mcolors
 #
 dark_label_colors = {
     'Domain': '#2c3263',
-    'Whois_Phone': '#64291a',
+    'Whois_Phone': '#2f1710',
     'Whois_Email': '#005a43',
     'Whois_Name': '#3e2a5a',
     'IP': '#3e2618',
@@ -27,11 +27,12 @@ label_colors = {
     'Whois_Phone': '#EF553B',
     'Whois_Email': '#00CC96',
     'Whois_Name': '#AB63FA',
-    'IP': '#ffbe18',
+    'IP': '#FFA15A',
     'IP_C': '#5fab28',
     'Cert': '#19D3F3',
     'ASN': '#FF6692'
 }
+
 edge_colors = {
     'r_cert': '#19D3F3',
     'r_subdomain': '#636EFA',

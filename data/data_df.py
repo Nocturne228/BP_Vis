@@ -3,7 +3,7 @@ import pandas as pd
 
 node_label = ['Domain', 'IP', 'Cert', 'Whois_Name', 'Whois_Phone', 'Whois_Email', 'IP_C', 'ASN']
 
-team_no = 2
+team_no = 1
 
 csv_path = f'data/team{team_no}/'
 
