@@ -16,6 +16,7 @@ button_group = html.Div(
                 {"label": "关键链路", "value": 2},
                 {"label": "核心资产", "value": 3},
                 {"label": "违法产业", "value": 4},
+                {"label": "邻居查询", "value": 5},
             ],
             value=1,
         ),

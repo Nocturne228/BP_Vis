@@ -152,11 +152,13 @@ def display_tap_edge_data(data):
     ],
     [
         Input("radios-button-group", "value"),
+        Input("check-node-subgraph-button", "n_clicks"),
+        Input("jumps-button-input", "value"),
         State("base-cyto-graph", "elements"),
-        State("base-cyto-graph", "stylesheet"),
+        Input("base-cyto-graph", "tapNodeData"),
     ]
 )
-def display_graph_info(value, old_elements, old_stylesheet):
+def display_graph_info(value, is_check, jumps, old_elements, tap_node):
     """
     接收按钮值，控制图谱的信息展示，如关键链路和核心资产节点
 
@@ -186,7 +188,6 @@ def display_graph_info(value, old_elements, old_stylesheet):
     ]
 
     for element in old_elements:
-
         if 'industry' in element['data']:
             if element['data']['label_color'] == dark_label_colors.get(element['data']['label'], '#000000'):
                 element['data']['label_color'] = label_colors.get(element['data']['label'], '#FFFFFF')
@@ -198,28 +199,31 @@ def display_graph_info(value, old_elements, old_stylesheet):
 
     if value == 1:
         pass
+        # if is_check % 2 == 0:
+        #     for element in old_elements:
+        #         if 'industry' in element['data']:
+        #             if element['data']['label_color'] == dark_label_colors.get(element['data']['label'], '#000000'):
+        #                 element['data']['label_color'] = label_colors.get(element['data']['label'], '#FFFFFF')
+        #
+        #         if 'source' in element['data'] and 'target' in element['data']:
+        #             edge_color_type = get_node_label(element['data']['target'])
+        #             edge_label_color = label_colors.get(edge_color_type, '#FFFFFF')
+        #             element['data']['label_color'] = edge_label_color
+        #
+        # elif is_check % 2 == 1 and tap_node is not None:
+        #     print(jumps)
+        #     nodes, edges = get_neighbors_with_edges(old_elements, tap_node['id'], jumps)
+        #     for element in old_elements:
+        #         if 'industry' in element['data']:
+        #             if element['data']['id'] not in nodes:
+        #                 element['data']['label_color'] = dark_label_colors.get(element['data']['label'], '#FFFFFF')
+        #     print(edges)
+
+        # else:
+        #     pass
 
     elif value == 2:
-        # for element in old_elements:
-        #     if 'source' in element['data'] and 'target' in element['data']:
-        #         element['data']['label_color'] = dark_label_colors.get(
-        #             get_node_label(element['data']['target']), '#FFFFFF'
-        #         )
-        #         for index, row in key_link.iterrows():
-        #             source = row['source']
-        #             target = row['target']
-        #
-        #             if element['data']['source'] == source and element['data']['target'] == target:
-        #                 element['data']['label_color'] = adjust_brightness(element['data']['label_color'], factor=2.0)
-        #
-        #     else:
-        #         nodes = list(set(key_link['source']) | set(key_link['target']))  # 获取所有节点
-        #         if element['data']['id'] in nodes:
-        #             pass
-        #         else:
-        #             element['data']['label_color'] = dark_label_colors.get(element['data']['label'], '#000000')
         key_links = list(zip(key_link['source'], key_link['target']))
-        counter = 1
         # 获取 source 和 target 列
         sources = key_link['source'].tolist()
         targets = key_link['target'].tolist()
@@ -248,7 +252,7 @@ def display_graph_info(value, old_elements, old_stylesheet):
                 edge_label_color = dark_label_colors.get(edge_color_type, '#FFFFFF')
                 element['data']['label_color'] = edge_label_color
 
-    else:
+    elif value == 4:
         global_node_style = {
             'selector': 'node',
             'style': {
@@ -304,6 +308,30 @@ def display_graph_info(value, old_elements, old_stylesheet):
         stylesheet.extend(style)
         # pass
     # old_stylesheet = stylesheet
+    elif value == 5:
+        if jumps is None:
+            jumps = 1
+        if tap_node is None:
+            tap_node = old_elements[1]['data']
+        nodes, edges = get_neighbors_with_edges(old_elements, tap_node['id'], jumps)
+        for element in old_elements:
+            if 'industry' in element['data']:
+                element['data']['label_color'] = dark_label_colors.get(element['data']['label'], '#FFFFFF')
+                if element['data']['id'] == tap_node['id'] or element['data']['id'] in nodes:
+                    element['data']['label_color'] = label_colors.get(element['data']['label'], '#FFFFFF')
+
+            else:
+                edge_color_type = get_node_label(element['data']['target'])
+                edge_label_color = dark_label_colors.get(edge_color_type, '#FFFFFF')
+                element['data']['label_color'] = edge_label_color
+
+                for edge in edges:
+                    if element['data']['source'] == edge[0] and element['data']['target'] == edge[1]:
+                        edge_color_type = get_node_label(element['data']['target'])
+                        edge_label_color = label_colors.get(edge_color_type, '#FFFFFF')
+                        element['data']['label_color'] = edge_label_color
+
+        pass
 
     return old_elements, stylesheet
 
@@ -331,7 +359,7 @@ def toggle_button(radio_value):
     Returns:
     bool: True if the button should be disabled, False otherwise.
     """
-    if radio_value != 1:
+    if radio_value != 5:
         return True
     else:
         return False

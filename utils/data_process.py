@@ -46,7 +46,7 @@ def get_node_label(node_id):
     return None  # 如果未找到对应的标签，返回 None
 
 
-def get_neighbors_with_edges(elements, node_id, hops):
+def get_neighbors_with_edges(elements, node_id, hops=0):
     """
     Find all neighboring nodes and edges within a specified number of hops from a given node.
 
@@ -93,11 +93,12 @@ def get_neighbors_with_edges(elements, node_id, hops):
                 if 'source' in ele['data'] and 'target' in ele['data']:
                     source = ele['data']['source']
                     target = ele['data']['target']
-                    if source == current_node and target not in visited:
-                        queue.append((target, current_hop + 1))
-                        edges.add((source, target))
-                    elif target == current_node and source not in visited:
-                        queue.append((source, current_hop + 1))
-                        edges.add((source, target))
+                    if current_hop < hops:
+                        if source == current_node and target not in visited:
+                            queue.append((target, current_hop + 1))
+                            edges.add((source, target))
+                        elif target == current_node and source not in visited:
+                            queue.append((source, current_hop + 1))
+                            edges.add((source, target))
 
     return neighbors, edges
