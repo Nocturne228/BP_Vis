@@ -1,10 +1,10 @@
 from dash import dcc, html, callback, Input, Output
 import dash_bootstrap_components as dbc
 
-from layouts.components import button_group, badges, node_card, edge_card, navbar, legend_html_component
 from graphs.network_graphs import base_cyto_graph
 from layouts.inputs import inputs_container
-from figures.fig_collections import sankey_fig, pie_chart, edge_pie_chart
+from graphs.fig_collections import pie_chart, edge_pie_chart
+from layouts.components import button_group, badges, node_card, edge_card, navbar, legend_html_component
 
 body_layout = dbc.Container(
     [
