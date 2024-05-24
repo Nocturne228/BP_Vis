@@ -1,9 +1,11 @@
-plotly
-pandas
-dash
+plotly~=5.22.0
+pandas~=2.2.2
+dash~=2.17.0
 dash-cytoscape
 dash-bootstrap-components
-networkx
-numpy
+networkx~=3.3
+numpy~=1.26.4
 
-matplotlib
+matplotlib~=3.8.4
+holoviews~=1.18.3
+bokeh~=3.4.1

@@ -2,6 +2,7 @@ from dash import dcc, html
 import dash_bootstrap_components as dbc
 
 from graphs.network_graphs import base_cyto_graph
+from graphs.holo_graph import chord_graph_html_content
 from layouts.inputs import inputs_container
 from layouts.components import button_group, node_card, edge_card, navbar, legend_html_component, badges, figure_select
 
@@ -83,15 +84,21 @@ body_layout = dbc.Container(
 
                 dbc.Col(
                     [
-                        dcc.Graph(
-                            id='edge-pie-fig',
-                        ),
+                        # dcc.Graph(
+                        #     id='edge-pie-fig',
+                        # ),
+                        html.Iframe(srcDoc=chord_graph_html_content,
+                                    style={"width": "100%", "height": "600px", "border": "none"})
                     ],
                     width=4,
                 ),
             ]
         ),
         dbc.Row(
+            dbc.Col(
+                html.Iframe(srcDoc=chord_graph_html_content,
+                            style={"width": "100%", "height": "600px", "border": "none"})
+            )
         )
     ],
     style={"marginTop": 20},
