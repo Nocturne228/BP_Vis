@@ -34,7 +34,8 @@ badges = html.Span(
         dbc.Badge("IP_C", pill=True, color=label_colors["IP_C"], className="me-1"),
         dbc.Badge("Cert", pill=True, color=label_colors["Cert"], className="me-1"),
         dbc.Badge("ASN", pill=True, color=label_colors["ASN"], className="me-1"),
-    ]
+    ],
+    className="d-flex flex-column"
 )
 
 node_card = dbc.Card(
@@ -63,7 +64,14 @@ navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink("Source Code", href="https://github.com/Nocturne228/BP_Vis")),
     ],
-    brand="黑灰产业网络资产图谱分析",
+    brand=dbc.Row(
+        [
+            dbc.Col(html.Img(src="/assets/logo.png", height='30px')),
+            dbc.Col(dbc.NavbarBrand("黑灰产业网络资产图谱分析", className="ml-2")),
+            dbc.Col(dbc.NavbarBrand("by Nocturne", style={"font-size": "12px"})),
+        ],
+        align="center",
+    ),
     brand_href="#",
     color="primary",
     dark=True,
@@ -111,3 +119,22 @@ legend_html = """
 """
 
 legend_html_component = dcc.Markdown(legend_html, dangerously_allow_html=True)
+
+
+figure_select = dbc.Card(
+    dbc.CardBody(
+        dbc.RadioItems(
+            id="figure-select",
+            className="btn-group-vertical",
+            inputClassName="btn-check",
+            labelClassName="btn btn-outline-primary mb-4",  # Add margin-bottom to each button
+            labelCheckedClassName="active",
+            options=[
+                {"label": "基础信息", "value": 1},
+                {"label": "图谱信息", "value": 2},
+            ],
+            value=1,
+        ),
+    ),
+    className="mt-3",
+)

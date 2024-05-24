@@ -42,10 +42,8 @@ graph_layouts_select = html.Div(
 jumps_input_group = html.Div(
     dbc.InputGroup(
         [
-            dbc.Label('查询邻居节点和链路', color='white'),
-            dbc.Button("查询", id="check-node-subgraph-button", n_clicks=0),
+            dbc.Label('链路跳数：', color='white', class_name='mt-2'),
             dbc.Input(id="jumps-button-input", type="number", min=0, max=5, step=1, value=1),
-            dbc.Button("重置", id="reset-graph-button", n_clicks=0),
         ],
         class_name='mb-4'
     ),

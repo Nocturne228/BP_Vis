@@ -154,13 +154,12 @@ def display_tap_edge_data(data):
     ],
     [
         Input("radios-button-group", "value"),
-        Input("check-node-subgraph-button", "n_clicks"),
         Input("jumps-button-input", "value"),
         State("base-cyto-graph", "elements"),
         Input("base-cyto-graph", "tapNodeData"),
     ]
 )
-def display_graph_info(value, is_check, jumps, old_elements, tap_node):
+def display_graph_info(value, jumps, old_elements, tap_node):
     """
     接收按钮值，控制图谱的信息展示，如关键链路和核心资产节点
 
@@ -347,25 +346,25 @@ def update_layout(layout):
     }
 
 
-@callback(
-    Output('check-node-subgraph-button', 'disabled'),
-    Input('radios-button-group', 'value')
-)
-def toggle_button(radio_value):
-    """
-    Enable or disable the 'Random name' button based on the selected radio button value.
-
-    Parameters:
-    radio_value (str): The value of the selected radio button, either 'enable' or 'disable'.
-
-    Returns:
-    bool: True if the button should be disabled, False otherwise.
-    """
-    if radio_value != 5:
-        return True
-    else:
-        return False
-
+# @callback(
+#     Output('check-node-subgraph-button', 'disabled'),
+#     Input('radios-button-group', 'value')
+# )
+# def toggle_button(radio_value):
+#     """
+#     Enable or disable the 'Random name' button based on the selected radio button value.
+#
+#     Parameters:
+#     radio_value (str): The value of the selected radio button, either 'enable' or 'disable'.
+#
+#     Returns:
+#     bool: True if the button should be disabled, False otherwise.
+#     """
+#     if radio_value != 5:
+#         return True
+#     else:
+#         return False
+#
 
 # 回调函数：根据radios-button-group的值控制图例组件的显示与隐藏
 @callback(
@@ -405,7 +404,6 @@ def update_sankey_fig(tap_node, jumps, old_elements):
                 pad=15,
                 thickness=20,
                 line=dict(color="black", width=0.5),
-                label=[get_node_label(node) for node in nodes],
                 color=[label_colors.get(get_node_label(node)) for node in nodes],
             ),
             link=dict(
@@ -423,9 +421,17 @@ def update_sankey_fig(tap_node, jumps, old_elements):
 
         return fig
 
-        print(nodes)
-        print(edges)
-        pass
 
-
-
+@callback(
+    [
+        Output('edge-pie-fig', 'style'),
+        Output('node-pie-fig', 'style'),
+        Output('sankey-fig', 'style'),
+    ],
+    Input('figure-select', 'value')
+)
+def display_fig(selected_value):
+    if selected_value == 1:
+        return {'display': 'block'}, {'display': 'block'}, {'display': 'none'}
+    else:
+        return {'display': 'none'}, {'display': 'none'}, {'display': 'block'}

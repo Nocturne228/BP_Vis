@@ -1,10 +1,10 @@
 from dash import dcc, html
 import dash_bootstrap_components as dbc
 
-from layouts.components import button_group, node_card, edge_card, navbar, legend_html_component
 from graphs.network_graphs import base_cyto_graph
 from layouts.inputs import inputs_container
 from figures.fig_collections import pie_chart, edge_pie_chart
+from layouts.components import button_group, node_card, edge_card, navbar, legend_html_component, badges, figure_select
 
 body_layout = dbc.Container(
     [
@@ -13,6 +13,8 @@ body_layout = dbc.Container(
                 dbc.Col(
                     [
                         inputs_container,
+                        badges,
+                        figure_select,
                     ],
                     width=2
                 ),
@@ -66,27 +68,33 @@ body_layout = dbc.Container(
                 dbc.Col(
                     [
                         dcc.Graph(
-                            id='sankey-fig',
+                            id='node-pie-fig',
+                            figure=pie_chart
                         ),
                     ],
                     width=4,
                 ),
                 dbc.Col(
                     [
-                        dcc.Graph(figure=pie_chart),
+                        dcc.Graph(
+                            id='sankey-fig',
+                        ),
                     ],
                     width=4,
                 ),
+
                 dbc.Col(
                     [
-                        dcc.Graph(figure=edge_pie_chart),
+                        dcc.Graph(
+                            id='edge-pie-fig',
+                            figure=edge_pie_chart
+                        ),
                     ],
                     width=4,
                 ),
             ]
         ),
         dbc.Row(
-            dbc.Label("test")
         )
     ],
     style={"marginTop": 20},

@@ -215,3 +215,4 @@ Temporary Items
 .idea
 *.ipynb
 *.pyc
+/tests/chord_diagram.html

@@ -3,7 +3,6 @@ import networkx as nx
 import plotly.express as px
 import plotly.graph_objects as go
 
-
 from data.data_df import nodes_df, edges_df, core_node, key_link
 from utils.color_palette import label_colors
 
@@ -129,31 +128,33 @@ def generate_link_sankey():
             })
 
     # 创建 Sankey 图
-    fig = go.Figure(go.Sankey(
-        node=dict(
-            pad=15,
-            thickness=20,
-            line=dict(color="black", width=0.5),
-            label=nodes,
-            color=[label_colors[label] for label in nodes]
+    sankey_fig = go.Figure(
+        go.Sankey(
+            node=dict(
+                pad=15,
+                thickness=20,
+                line=dict(color="black", width=0.5),
+                label=nodes,
+                color=[label_colors[label] for label in nodes]
 
+            ),
+            link=dict(
+                source=[link['source'] for link in links],
+                target=[link['target'] for link in links],
+                value=[link['value'] for link in links],
+                label=[link['label'] for link in links],
+                color=[label_colors[nodes[link['target']]] for link in links],
+            ),
         ),
-        link=dict(
-            source=[link['source'] for link in links],
-            target=[link['target'] for link in links],
-            value=[link['value'] for link in links],
-            label=[link['label'] for link in links],
-            color=[label_colors[nodes[link['target']]] for link in links],
-        ),
-    ))
+    )
 
     # 设置图表标题
-    fig.update_layout(title_text="关键链路流向图")
-    fig.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)', paper_bgcolor='rgba(0,0,0,0)',
-                      legend_font_color='white', title_font_color='white', font_color='white')
+    sankey_fig.update_layout(title_text="关键链路流向图")
+    sankey_fig.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)', paper_bgcolor='rgba(0,0,0,0)',
+                             legend_font_color='white', title_font_color='white', font_color='white')
 
     # 显示图表
-    return fig
+    return sankey_fig
 
 
 if __name__ == '__main__':
