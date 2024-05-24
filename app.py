@@ -1,7 +1,6 @@
 # Run this app with `python app.py` and
 # visit http://127.0.0.1:8050/ in your web browser.
 from dash import Dash, html
-from layouts.layout import app_layout
 from layouts.dbc_layout import body_layout, navbar
 import dash_bootstrap_components as dbc
 
