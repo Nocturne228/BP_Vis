@@ -81,7 +81,7 @@ def generate_pie_chart():
 
     # 创建饼图并显示图例
     fig = px.pie(names=type_counts_df['type'], values=type_counts_df['count'],
-                 title='资产类型组成', height=300, width=500)
+                 title='资产类型组成', height=400, width=500)
 
     fig.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)', paper_bgcolor='rgba(0,0,0,0)',
                       legend_font_color='white', title_font_color='white')
@@ -99,7 +99,7 @@ def generate_edge_pie_chart():
 
     # 创建饼图并显示图例
     fig = px.pie(names=type_counts_df['type'], values=type_counts_df['count'],
-                 title='关系类型组成', height=300, width=500)
+                 title='关系类型组成', height=400, width=500)
 
     fig.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)', paper_bgcolor='rgba(0,0,0,0)',
                       legend_font_color='white', title_font_color='white')
