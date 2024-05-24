@@ -1,7 +1,9 @@
+import plotly.graph_objects as go
 import dash_bootstrap_components as dbc
 from dash import Input, Output, State, callback, html
 
 from graphs.network_graphs import core_ids, key_link, filtered_nodes
+from graphs.data_figures import generate_link_sankey
 from utils.data_process import get_node_label, industry_mapping, get_neighbors_with_edges, get_color_for_industry
 from utils.color_palette import adjust_brightness, dark_label_colors, label_colors, generate_svg
 
@@ -375,3 +377,55 @@ def toggle_legend_display(value):
         return {"display": "block"}  # 显示图例组件
     else:
         return {"display": "none"}  # 隐藏图例组件
+
+
+@callback(
+    Output('sankey-fig', 'figure'),
+    [
+        Input('base-cyto-graph', 'tapNodeData'),
+        Input("jumps-button-input", "value"),
+        State('base-cyto-graph', 'elements'),
+    ]
+)
+def update_sankey_fig(tap_node, jumps, old_elements):
+    if tap_node is None:
+        sankey_fig = generate_link_sankey()
+        return sankey_fig
+    else:
+        nodes, edges = get_neighbors_with_edges(old_elements, tap_node['id'], jumps)
+        node_dict = {node: i for i, node in enumerate(nodes)}
+
+        source_indices = [node_dict[edge[0]] for edge in edges]
+        target_indices = [node_dict[edge[1]] for edge in edges]
+        values = [1] * len(edges)  # 这里假设每条边的权重为1，可以根据实际情况调整
+
+        # 创建桑基图
+        fig = go.Figure(data=[go.Sankey(
+            node=dict(
+                pad=15,
+                thickness=20,
+                line=dict(color="black", width=0.5),
+                label=[get_node_label(node) for node in nodes],
+                color=[label_colors.get(get_node_label(node)) for node in nodes],
+            ),
+            link=dict(
+                source=source_indices,
+                target=target_indices,
+                value=values,
+                color=[dark_label_colors.get(get_node_label(target[1])) for target in edges],
+            )
+        )])
+
+        # 设置图表标题
+        fig.update_layout(title_text=f"资产{tap_node['name']}流向图")
+        fig.update_layout(plot_bgcolor='rgba(0, 0, 0, 0)', paper_bgcolor='rgba(0,0,0,0)',
+                          legend_font_color='white', title_font_color='white', font_color='white')
+
+        return fig
+
+        print(nodes)
+        print(edges)
+        pass
+
+
+

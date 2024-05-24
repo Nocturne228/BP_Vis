@@ -65,7 +65,9 @@ body_layout = dbc.Container(
             [
                 dbc.Col(
                     [
-                        dcc.Graph(figure=sankey_fig),
+                        dcc.Graph(
+                            id='sankey-fig',
+                        ),
                     ],
                     width=4,
                 ),

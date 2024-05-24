@@ -44,7 +44,7 @@ jumps_input_group = html.Div(
         [
             dbc.Label('查询邻居节点和链路', color='white'),
             dbc.Button("查询", id="check-node-subgraph-button", n_clicks=0),
-            dbc.Input(id="jumps-button-input", type="number", min=0, max=10, step=1),
+            dbc.Input(id="jumps-button-input", type="number", min=0, max=5, step=1, value=1),
             dbc.Button("重置", id="reset-graph-button", n_clicks=0),
         ],
         class_name='mb-4'

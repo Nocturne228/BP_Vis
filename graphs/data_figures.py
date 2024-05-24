@@ -120,7 +120,7 @@ def generate_link_sankey():
     for index, row in key_link.iterrows():
         source_label = get_node_label(row['source'])
         target_label = get_node_label(row['target'])
-        if source_label and target_label:
+        if source_label and target_label and source_label != target_label:
             links.append({
                 'source': nodes.index(source_label),
                 'target': nodes.index(target_label),
@@ -144,7 +144,7 @@ def generate_link_sankey():
             value=[link['value'] for link in links],
             label=[link['label'] for link in links],
             color=[label_colors[nodes[link['target']]] for link in links],
-        )
+        ),
     ))
 
     # 设置图表标题
