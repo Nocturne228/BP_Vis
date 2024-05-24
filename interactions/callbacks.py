@@ -3,7 +3,7 @@ import dash_bootstrap_components as dbc
 from dash import Input, Output, State, callback, html
 
 from graphs.network_graphs import core_ids, key_link, filtered_nodes
-from graphs.data_figures import generate_link_sankey
+from graphs.data_figures import generate_link_sankey, generate_pie_chart, generate_edge_pie_chart
 from utils.data_process import get_node_label, industry_mapping, get_neighbors_with_edges, get_color_for_industry
 from utils.color_palette import adjust_brightness, dark_label_colors, label_colors, generate_svg
 
@@ -424,14 +424,19 @@ def update_sankey_fig(tap_node, jumps, old_elements):
 
 @callback(
     [
-        Output('edge-pie-fig', 'style'),
-        Output('node-pie-fig', 'style'),
+        Output('edge-pie-fig', 'figure'),
+        Output('node-pie-fig', 'figure'),
         Output('sankey-fig', 'style'),
     ],
     Input('figure-select', 'value')
 )
 def display_fig(selected_value):
     if selected_value == 1:
-        return {'display': 'block'}, {'display': 'block'}, {'display': 'none'}
+        node_pie_fig = generate_pie_chart()
+        edge_pie_fig = generate_edge_pie_chart()
+        return node_pie_fig, edge_pie_fig, {'display': 'none'}
+
     else:
-        return {'display': 'none'}, {'display': 'none'}, {'display': 'block'}
+        node_pie_fig = generate_pie_chart()
+        edge_pie_fig = generate_edge_pie_chart()
+        return edge_pie_fig, node_pie_fig, {'display': 'block'}
