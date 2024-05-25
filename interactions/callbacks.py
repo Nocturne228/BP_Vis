@@ -439,3 +439,4 @@ def display_fig(selected_value):
         edge_pie_fig = generate_edge_pie_chart()
         return edge_pie_fig, {'display': 'block'}
 
+

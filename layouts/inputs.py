@@ -84,5 +84,3 @@ inputs_container = html.Div([
         jumps_input_group
     ], className="input-box")
 ])
-
-
