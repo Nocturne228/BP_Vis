@@ -49,7 +49,34 @@ jumps_input_group = html.Div(
     ),
 )
 
+
+team_select = html.Div(
+    [
+        dbc.Label("选择分析团伙", class_name='mt-3', color='white'),
+        dbc.Select(
+            [
+                "团伙1",
+                "团伙2",
+                "团伙3",
+                "团伙4",
+                "团伙5",
+                "团伙6",
+                "团伙7",
+                "团伙8",
+                "团伙9",
+                "团伙10",
+            ],
+            "团伙1",
+            id="select-team",
+            class_name='mb-4'
+        ),
+    ],
+)
+
+
 inputs_container = html.Div([
+    dbc.Label('选择团伙', color='white', class_name='h2'),
+    team_select,
     dbc.Label('图信息选项', color='white', class_name='h3'),
     html.Div([
         # layout_inputs,
@@ -57,3 +84,5 @@ inputs_container = html.Div([
         jumps_input_group
     ], className="input-box")
 ])
+
+

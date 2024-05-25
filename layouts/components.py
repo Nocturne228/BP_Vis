@@ -35,7 +35,6 @@ badges = html.Span(
         dbc.Badge("Cert", pill=True, color=label_colors["Cert"], className="me-1"),
         dbc.Badge("ASN", pill=True, color=label_colors["ASN"], className="me-1"),
     ],
-    className="d-flex flex-column"
 )
 
 node_card = dbc.Card(

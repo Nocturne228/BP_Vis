@@ -84,9 +84,7 @@ body_layout = dbc.Container(
 
                 dbc.Col(
                     [
-                        # dcc.Graph(
-                        #     id='edge-pie-fig',
-                        # ),
+                        dbc.Label("链路弦图", color='white', class_name='mt-3'),
                         html.Iframe(srcDoc=chord_graph_html_content,
                                     style={"width": "100%", "height": "600px", "border": "none"})
                     ],
@@ -94,12 +92,7 @@ body_layout = dbc.Container(
                 ),
             ]
         ),
-        dbc.Row(
-            dbc.Col(
-                html.Iframe(srcDoc=chord_graph_html_content,
-                            style={"width": "100%", "height": "600px", "border": "none"})
-            )
-        )
+
     ],
     style={"marginTop": 20},
 )

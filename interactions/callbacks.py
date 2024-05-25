@@ -433,10 +433,9 @@ def update_sankey_fig(tap_node, jumps, old_elements):
 def display_fig(selected_value):
     if selected_value == 1:
         node_pie_fig = generate_pie_chart()
-        edge_pie_fig = generate_edge_pie_chart()
         return node_pie_fig, {'display': 'none'}
 
     else:
-        node_pie_fig = generate_pie_chart()
         edge_pie_fig = generate_edge_pie_chart()
         return edge_pie_fig, {'display': 'block'}
+
