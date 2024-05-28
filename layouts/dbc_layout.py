@@ -1,6 +1,7 @@
 from dash import dcc, html
 import dash_bootstrap_components as dbc
 
+from graphs.data_figures import generate_edge_pie_chart, generate_pie_chart
 from graphs.network_graphs import base_cyto_graph
 from graphs.holo_graph import chord_graph_html_content
 from layouts.inputs import inputs_container
@@ -69,17 +70,28 @@ body_layout = dbc.Container(
                     [
                         dcc.Graph(
                             id='node-pie-fig',
+                            figure=generate_pie_chart()
                         ),
                     ],
-                    width=4,
                 ),
+
+                dbc.Col(
+                    [
+                        dcc.Graph(
+                            figure=generate_edge_pie_chart()
+                        )
+                    ]
+                )
+            ]
+        ),
+        dbc.Row(
+            [
                 dbc.Col(
                     [
                         dcc.Graph(
                             id='sankey-fig',
                         ),
-                    ],
-                    width=4,
+                    ]
                 ),
 
                 dbc.Col(
@@ -88,10 +100,9 @@ body_layout = dbc.Container(
                         html.Iframe(srcDoc=chord_graph_html_content,
                                     style={"width": "100%", "height": "600px", "border": "none"})
                     ],
-                    width=4,
                 ),
             ]
-        ),
+        )
 
     ],
     style={"marginTop": 20},
